@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="AutomatedSearchingSystem">
+<head>
+    <meta charset="UTF-8">
+    <title>Automated searching system</title>
+    <base href="/"/>
+    <!--BOOTSTRAP-->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--STYLES-->
+    <link rel="stylesheet" href="/static/style/sidebar/left-menu.css">
+
+</head>
+
+<body ng-controller="MainController">
+
+<ng-view>
+</ng-view>
+
+<!--JQUERY-->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<!--BOOTSTRAP-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<!--ANGULAR-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-animate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-touch.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.1/angular-resource.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.9/ngStorage.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-cookies.min.js"></script>
+
+<!--REFERENCES-->
+<script src="/static/js/application.js"></script>
+<script src="/static/js/application.config.js"></script>
+
+<script src="/static/js/controller/mainController.js"></script>
+<script src="/static/js/controller/menu/left-side-menu-controller.js"></script>
+<script src="/static/js/controller/search/searchBarController.js"></script>
+<script src="/static/js/controller/table/coursesListTableController.js"></script>
+<script src="/static/js/controller/menu/topNavigationBarController.js"></script>
+<!--DIRECTIVES-->
+<script src="/static/js/directive/left-side-menu.js"></script>
+<script src="/static/js/directive/search-bar.js"></script>
+<script src="/static/js/directive/courses-list-table.js"></script>
+<script src="/static/js/directive/topNavigationBar.js"></script>
+</body>
+
+</html>

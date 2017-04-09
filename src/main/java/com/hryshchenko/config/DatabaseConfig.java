@@ -1,6 +1,9 @@
 package com.hryshchenko.config;
 
 
+import com.hryshchenko.model.entity.Category;
+import com.hryshchenko.model.entity.Course;
+import com.hryshchenko.model.entity.Source;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,6 +49,7 @@ public class DatabaseConfig {
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
+        sessionFactoryBean.setAnnotatedClasses(Course.class, Category.class, Source.class);
         sessionFactoryBean.setDataSource(dataSource());
         sessionFactoryBean.setPackagesToScan(ENTITYMANAGER_PACKAGES_TO_SCAN);
         Properties hibernateProperties = new Properties();

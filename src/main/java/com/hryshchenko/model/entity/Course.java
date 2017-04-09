@@ -17,9 +17,9 @@ public class Course {
     private String name;
     @Column
     private String description;
-    @Column
+    @Column(name = "start_time")
     private Timestamp startTime;
-    @Column
+    @Column(name = "end_time")
     private Timestamp endTime;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
@@ -27,6 +27,8 @@ public class Course {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "source_id")
     private Source source;
+    @Column(name = "picture_url")
+    private String pictureUrl;
 
     public Course() {
     }
@@ -85,5 +87,13 @@ public class Course {
 
     public void setSource(Source source) {
         this.source = source;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 }

@@ -8,7 +8,10 @@
                     })
                     .when("/courses", {
                         templateUrl: "/static/page/courses-list/courses-list-page.html",
-                        controller: ""
+                        controller: "CourseController"
+                    })
+                    .otherwise({
+                        templateUrl: "/static/page/404.html"
                     });
 
                 $locationProvider.html5Mode(true);

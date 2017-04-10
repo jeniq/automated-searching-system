@@ -1,12 +1,57 @@
-<div id="wrapper" class="toggled">
-    <navigation-bar></navigation-bar>
-    <left-side-menu></left-side-menu>
-    <div id="page-content-wrapper" ng-cloak="">
-        <div class="container-fluid">
-            <div class="col-md-10 col-sm-offset-2">
-            <search-bar></search-bar>
-            <courses-list-table></courses-list-table>
+<div id="page-content-wrapper" ng-cloak="">
+    <div class="container-fluid">
+        <div class="row content">
+
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/courses">Онлайн курси</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">Головна</a></li>
+                        <li><a href="#">Категорії</a></li>
+                    </ul>
                 </div>
+            </nav>
+
+            <div class="col-sm-2 sidenav">
+                <h4>Оберіть ресурс</h4>
+                <ul class="nav nav-pills nav-stacked">
+                    <li><input type="checkbox" value="coursera">Coursera</li>
+                    <li><input type="checkbox" value="edx">Edx</li>
+                </ul>
+                <br>
+            </div>
+
+            <div class="col-sm-9">
+                <form role="form" id="searchBar">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm">
+              <span class="input-group-btn">
+                <button class="btn btn-default btn-sm" ng-click="searchCourseBar()">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+              </span>
+                    </div>
+                </form>
+
+                <hr>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="course in courseList">
+                        <td>course.name</td>
+                        <td>course.description</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 </div>

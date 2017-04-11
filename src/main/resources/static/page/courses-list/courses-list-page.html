@@ -10,15 +10,15 @@
                     <ul class="nav navbar-nav">
                         <li><a href="#">Головна</a></li>
                         <li><a href="#">Категорії</a></li>
+                        <li><a href="#">Статистика</a></li>
                     </ul>
                 </div>
             </nav>
 
             <div class="col-sm-2 sidenav">
                 <h4>Оберіть ресурс</h4>
-                <ul class="nav nav-pills nav-stacked">
-                    <li><input type="checkbox" value="coursera">Coursera</li>
-                    <li><input type="checkbox" value="edx">Edx</li>
+                <ul class="nav nav-pills nav-stacked" ng-repeat="source in sourceList">
+                    <li><input type="checkbox">{{ source.name }}</li>
                 </ul>
                 <br>
             </div>
@@ -36,6 +36,12 @@
                 </form>
 
                 <hr>
+
+                <div ng-hide="showCoursesTable()">
+                    <p>Виконайте пошук необхідного курсу за допомою пошукового рядку.<br>
+                        За замовчуванням пошук виконується по ключовим словам.<br>
+                        Якщо необхідно знайти за фразою - візьміть її в лапки.</p>
+                </div>
                 <table class="table" ng-show="showCoursesTable()">
                     <thead>
                     <tr>

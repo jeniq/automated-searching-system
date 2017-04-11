@@ -3,6 +3,8 @@
         .controller("CourseController", ["$scope", "$http",
             function ($scope, $http) {
 
+                $scope.sourceList = [];
+
                 $scope.request = {
                     string: "",
                     source: ""
@@ -13,7 +15,7 @@
                     var requestUrl = "/api/course/search?request=" + $scope.request.string +
                         "&source=" + $scope.request.source;
 
-                    $scope.searchByRequest(requestUrl).then(function (response) {
+                    $scope.getRequest(requestUrl).then(function (response) {
                         $scope.courseList = response.data;
                     }, function errorCallback(response) {
                     });
@@ -26,8 +28,17 @@
                     return false;
                 };
 
+                $scope.getAllSources = function () {
+                    var requestUrl = "/api/source/all";
+
+                    $scope.getRequest(requestUrl).then(function (response) {
+                        $scope.sourceList = response.data;
+                    }, function errorCallback(response) {
+                    });
+                };
+
                 // http
-                $scope.searchByRequest = function (url) {
+                $scope.getRequest = function (url) {
                     return $http.get(url)
                         .then(function (callback) {
                             callback.isError = false;
@@ -37,6 +48,9 @@
                             return callback;
                         });
                 };
+
+                // call
+                $scope.getAllSources();
 
             }]);
 })();

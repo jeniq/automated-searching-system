@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/course")
 public class CourseController {
 
-    private static final String JSON_MEDIA_TYPE = "application/json;";
+    public static final String JSON_MEDIA_TYPE = "application/json;";
     private CourseService courseService;
 
     @Autowired
@@ -30,6 +30,6 @@ public class CourseController {
 
     @GetMapping(value = "/search", produces = JSON_MEDIA_TYPE)
     public ResponseEntity<?> searchCourse(@RequestParam String request, @RequestParam String source) {
-        return ResponseEntity.ok(courseService.searchByValue(request, source));
+        return ResponseEntity.ok(courseService.search(request, source));
     }
 }

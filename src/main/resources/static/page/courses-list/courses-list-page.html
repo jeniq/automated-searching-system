@@ -26,7 +26,7 @@
             <div class="col-sm-9">
                 <form role="form" id="searchBar">
                     <div class="input-group">
-                        <input type="text" class="form-control input-sm">
+                        <input type="text" class="form-control input-sm" ng-model="request.string">
               <span class="input-group-btn">
                 <button class="btn btn-default btn-sm" ng-click="searchCourseBar()">
                     <span class="glyphicon glyphicon-search"></span>
@@ -39,8 +39,8 @@
                 <table class="table" ng-show="showCoursesTable()">
                     <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Description</th>
+                        <th>Назва</th>
+                        <th>Опис курсу</th>
                     </tr>
                     </thead>
                     <tbody>

@@ -4,16 +4,14 @@
             function ($scope, $http) {
 
                 $scope.sourceList = [];
-
                 $scope.request = {
                     string: "",
-                    source: ""
+                    source: [] // TODO current: ,id,id,id or ,,id
                 };
                 $scope.courseList = [];
 
                 $scope.searchCourseBar = function () {
-                    var requestUrl = "/api/course/search?request=" + $scope.request.string +
-                        "&source=" + $scope.request.source;
+                    var requestUrl = "/api/course/search?source=" + $scope.request.source.toString() + "&request=" + $scope.request.string;
 
                     $scope.getRequest(requestUrl).then(function (response) {
                         $scope.courseList = response.data;

@@ -18,7 +18,8 @@
             <div class="col-sm-2 sidenav">
                 <h4>Оберіть ресурс</h4>
                 <ul class="nav nav-pills nav-stacked" ng-repeat="source in sourceList">
-                    <li><input type="checkbox">{{ source.name }}</li>
+                    <li><input type="checkbox" ng-model="request.source[source.id]" ng-true-value="{{source.id}}"
+                    ng-false-value="">{{ source.name }}</li>
                 </ul>
                 <br>
             </div>

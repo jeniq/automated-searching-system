@@ -20,5 +20,12 @@
                         });
                 };
 
+                $scope.showCoursesTable = function () {
+                    if ($scope.courseList.length > 0){
+                        return true;
+                    }
+                    return false;
+                };
+
             }]);
 })();

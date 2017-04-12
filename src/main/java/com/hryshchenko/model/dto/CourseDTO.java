@@ -4,10 +4,6 @@ import com.hryshchenko.model.entity.Category;
 import com.hryshchenko.model.entity.Course;
 import com.hryshchenko.model.entity.Source;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.sql.Timestamp;
 
 public class CourseDTO {
@@ -20,19 +16,19 @@ public class CourseDTO {
     private Source source;
     private String pictureUrl;
 
-    public Course toCourse(){
+    public Course toCourse() {
         Course course = new Course();
 
         course.setName(this.name);
         course.setDescription(this.description);
         course.setPictureUrl(this.pictureUrl);
-        if (this.startTime != null){
+        if (this.startTime != null) {
             course.setStartTime(this.startTime);
         }
-        if (this.category != null){
+        if (this.category != null) {
             course.setCategory(this.category);
         }
-        if (this.source != null){
+        if (this.source != null) {
             course.setSource(this.source);
         }
 

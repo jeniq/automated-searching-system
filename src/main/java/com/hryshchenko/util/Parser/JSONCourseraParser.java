@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JSONCourseraParser implements Parsable{
+public class JSONCourseraParser implements Parsable {
 
     // Coursera JSON
     public List<CourseDTO> parseCourseJSON(JSONObject object) {

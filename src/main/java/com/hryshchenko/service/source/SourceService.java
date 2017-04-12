@@ -17,7 +17,7 @@ public class SourceService {
         this.sourceRepository = sourceRepository;
     }
 
-    public List<Source> getAll(){
+    public List<Source> getAll() {
         return sourceRepository.getAll();
     }
 }

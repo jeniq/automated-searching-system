@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JSONUdacityParser implements Parsable{
+public class JSONUdacityParser implements Parsable {
 
     @Override
     public List<CourseDTO> parseCourseJSON(JSONObject object) {

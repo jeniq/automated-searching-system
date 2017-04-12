@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class EdxAPI implements Searchable{
+public class EdxAPI implements Searchable {
 
     private static final String searchByValue = "https://courses.edx.org/api/courses/v1/courses/";
 

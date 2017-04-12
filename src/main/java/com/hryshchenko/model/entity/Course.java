@@ -2,7 +2,6 @@ package com.hryshchenko.model.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Table(name = "course")

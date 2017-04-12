@@ -26,13 +26,11 @@ public class CourseRepository {
 
     @Transactional
     public void save(Course course) {
-        System.out.println("Save " + course.getName());
         getSession().save(course);
     }
 
     @Transactional
     public void saveAll(List<CourseDTO> courseDTOs) {
-        System.out.println("SaveAll " + courseDTOs.size());
         for (CourseDTO courseDTO : courseDTOs) {
             getSession().save(courseDTO.toCourse());
         }

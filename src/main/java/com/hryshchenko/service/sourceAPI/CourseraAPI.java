@@ -10,9 +10,9 @@ import java.io.IOException;
 @Component
 public class CourseraAPI implements Searchable {
 
-    @Autowired
     private URLexecutor urlExecutor;
 
+    @Autowired
     public CourseraAPI(URLexecutor urlExecutor) {
         this.urlExecutor = urlExecutor;
     }

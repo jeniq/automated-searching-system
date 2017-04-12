@@ -1,0 +1,8 @@
+.resourceImg {
+    width: 125px;
+    height: 125px;
+}
+
+tbody tr:hover {
+    background-color: rgba(253, 255, 139, 0.52);
+}

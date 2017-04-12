@@ -4,7 +4,7 @@ import com.hryshchenko.repository.course.CourseRepository;
 import com.hryshchenko.service.sourceAPI.CourseraAPI;
 import com.hryshchenko.service.sourceAPI.EdxAPI;
 import com.hryshchenko.service.sourceAPI.Searchable;
-import com.hryshchenko.util.Parser.JSONParser;
+import com.hryshchenko.util.Parser.JSONCourseraParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -12,15 +12,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class SearchService {
     public static final String SPACE = " ";
-    private JSONParser jsonParser;
+    private JSONCourseraParser jsonCourseraParser;
     private CourseraAPI courseraAPI;
     private EdxAPI edxAPI;
     private CourseRepository courseRepository;
 
     @Autowired
-    public SearchService(JSONParser jsonParser, CourseraAPI courseraAPI, EdxAPI edxAPI,
+    public SearchService(JSONCourseraParser jsonCourseraParser, CourseraAPI courseraAPI, EdxAPI edxAPI,
                          CourseRepository courseRepository) {
-        this.jsonParser = jsonParser;
+        this.jsonCourseraParser = jsonCourseraParser;
         this.courseraAPI = courseraAPI;
         this.edxAPI = edxAPI;
         this.courseRepository = courseRepository;
@@ -31,7 +31,7 @@ public class SearchService {
     public void search(String value, String source) {
         String[] values;
         Searchable sourceAPI;
-
+        // TODO fix string searching
         if (value.startsWith("\"") & value.endsWith("\"")) {
             values = new String[]{value}; // Search by full request string
         } else {
@@ -46,7 +46,7 @@ public class SearchService {
             }
             sourceAPI = selectResource(Long.valueOf(resource));
             for (String request : values) {
-                courseRepository.saveAll(jsonParser.parseCourseJSON(sourceAPI.find(request)));
+                courseRepository.saveAll(jsonCourseraParser.parseCourseJSON(sourceAPI.find(request)));
             }
         }
     }

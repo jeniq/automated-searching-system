@@ -1,0 +1,32 @@
+<div id="detailsModal">
+    <div id="page-content-wrapper" ng-cloak>
+        <div class="container-fluid">
+            <div class="row content">
+                <div class="col-sm-12" >
+                    <p>{{ courseDetails.name }}</p>
+                    <hr>
+                    <div>
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td><img class="resourceImg" src="{{ courseDetails.pictureUrl }}"></td>
+                                <td>{{ courseDetails.description }}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Початок: {{ courseDetails.startDate }}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <button>See at site</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

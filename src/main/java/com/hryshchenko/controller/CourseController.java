@@ -18,6 +18,11 @@ public class CourseController {
         this.courseService = courseService;
     }
 
+    @GetMapping(value = "/{id}", produces = JSON_MEDIA_TYPE)
+    public ResponseEntity<?> getCourse(@PathVariable Long id){
+        return ResponseEntity.ok(courseService.getCourse(id));
+    }
+
     @GetMapping(value = "/all", produces = JSON_MEDIA_TYPE)
     public ResponseEntity<?> getAllCourses() {
         return ResponseEntity.ok(courseService.getAllCourses());

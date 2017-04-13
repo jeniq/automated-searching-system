@@ -1,8 +1,10 @@
 (function () {
     angular.module("AutomatedSearchingSystem")
-        .controller("CourseController", ["$scope", "$http",
-            function ($scope, $http) {
+        .controller("CourseController", ["$uibModal", "$scope", "$http", "$location",
+            function ($uibModal, $scope, $http, $location) {
 
+                $scope.courseDetails = {name: "COURSE NAME!!!"};
+                $scope.status = '  ';
                 $scope.sourceList = [];
                 $scope.request = {
                     string: "",
@@ -33,6 +35,25 @@
                         $scope.sourceList = response.data;
                     }, function errorCallback(response) {
                     });
+                };
+
+                $scope.openCourseDetails = function (courseId) {
+                    var requestUrl = "/api/course/" + courseId;
+                    //$location.path("courses/" + courseId);
+                    //      $location.replace();
+
+                    $scope.getRequest(requestUrl).then(function (response) {
+                        $scope.courseDetails = response.data;
+                    }, function errorCallback(response) {
+                    });
+
+                    $uibModal.open({
+                        animation: true,
+                        size: 'md',
+                        templateUrl: "/static/page/course/details-modal.html",
+                        scope: $scope
+                    });
+                        //.closed.then(function(){$location.path("courses")});
                 };
 
                 // http

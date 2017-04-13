@@ -19,7 +19,8 @@
                 <h4>Оберіть ресурс</h4>
                 <ul class="nav nav-pills nav-stacked" ng-repeat="source in sourceList">
                     <li><input type="checkbox" ng-model="request.source[source.id]" ng-true-value="{{source.id}}"
-                    ng-false-value="">{{ source.name }}</li>
+                               ng-false-value="">{{ source.name }}
+                    </li>
                 </ul>
                 <br>
             </div>
@@ -43,7 +44,7 @@
                         За замовчуванням пошук виконується по ключовим словам.<br>
                         Якщо необхідно знайти за фразою - візьміть її в лапки.</p>
                 </div>
-                <table class="table" ng-show="showCoursesTable()">
+                <table class="coursesTable" ng-show="showCoursesTable()">
                     <thead>
                     <tr>
                         <th></th>
@@ -51,8 +52,8 @@
                         <th>Опис курсу</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr ng-repeat="course in courseList">
+                    <tbody id="courseList">
+                    <tr ng-repeat="course in courseList" ng-click="openCourseDetails(course.id)">
                         <td><img class="resourceImg" src="{{ course.pictureUrl }}"></td>
                         <td>{{ course.name }}</td>
                         <td>{{ course.description }}</td>

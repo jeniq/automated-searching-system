@@ -27,6 +27,10 @@ public class CourseService {
         this.eventPublisher = eventPublisher;
     }
 
+    public Course getCourse(Long id) {
+        return courseRepository.getById(id);
+    }
+
     @Transactional
     public List<Course> getAllCourses() {
         return courseRepository.getAll();
@@ -47,6 +51,7 @@ public class CourseService {
         } else {
             values = request.split(SPACE); // Search by separate word
         }
+
         for (String value : values) {
             courses.addAll(courseRepository.getCourseByName(value));
         }

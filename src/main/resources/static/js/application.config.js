@@ -10,6 +10,14 @@
                         templateUrl: "/static/page/courses-list/courses-list-page.html",
                         controller: "CourseController"
                     })
+                    .when("/details", {
+                        templateUrl: "/static/page/course/details-modal.html",
+                        controller: "CourseController"
+                    })
+                    .when("/courses/:id", {
+                        templateUrl: "",
+                        controller: "CourseController"
+                    })
                     .otherwise({
                         templateUrl: "/static/page/404.html"
                     });

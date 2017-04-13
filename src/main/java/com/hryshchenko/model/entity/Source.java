@@ -17,10 +17,14 @@ public class Source {
     private String name;
     @Column
     private String link;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "source")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "source")
     private Set<Course> courses;
 
     public Source() {
+    }
+
+    public Source(Long id) {
+        this.id = id;
     }
 
     public Long getId() {

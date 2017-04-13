@@ -20,10 +20,10 @@ public class Course {
     private Timestamp startTime;
     @Column(name = "end_time")
     private Timestamp endTime;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "source_id")
     private Source source;
     @Column(name = "picture_url")

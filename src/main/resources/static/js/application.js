@@ -2,6 +2,8 @@
     angular.module("AutomatedSearchingSystem", [
         "ngResource",
         "ngRoute",
-        "ngAnimate"
+        "ngAnimate",
+        "ngTouch",
+        "ui.bootstrap"
     ])
 })();

@@ -55,7 +55,9 @@ public class CourseRepository {
 
     @Transactional
     public Course getById(long id) {
-        return getSession().load(Course.class, id);
+        return (Course) getSession().createQuery("FROM Course WHERE id = :id")
+                .setParameter("id", id)
+                .uniqueResult();
     }
 
     @Transactional

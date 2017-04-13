@@ -1,5 +1,7 @@
 package com.hryshchenko.service.search;
 
+import com.hryshchenko.model.dto.CourseDTO;
+import com.hryshchenko.model.entity.Source;
 import com.hryshchenko.repository.course.CourseRepository;
 import com.hryshchenko.service.sourceAPI.CourseraAPI;
 import com.hryshchenko.service.sourceAPI.EdxAPI;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -51,11 +54,12 @@ public class SearchService {
             sourceAPI = selectResource(Long.valueOf(resource));
             for (String request : values) {
                 Optional<JSONObject> jsonObject = Optional.ofNullable(sourceAPI.find(request));
-                if (jsonObject.isPresent()) {
+                if (jsonObject.isPresent()) { // Avoid repeating courses in database
                     courseRepository.saveAll(jsonCourseraParser.parseCourseJSON(jsonObject.get())
                             .stream()
                             .filter(c -> c != null)
                             .filter(c -> courseRepository.getCourseBySourceId(c.getCourseSourceId()) == null)
+                            .peek(c -> c.setSource(new Source(1L)))
                             .collect(Collectors.toList())
                     );
                 }

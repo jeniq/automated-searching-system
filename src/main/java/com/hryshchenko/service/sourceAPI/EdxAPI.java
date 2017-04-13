@@ -9,6 +9,7 @@ import java.io.IOException;
 @Component
 public class EdxAPI implements Searchable {
 
+    public static final Long SOURCE_ID = 2L;
     private static final String searchByValue = "https://courses.edx.org/api/courses/v1/courses/";
 
     private URLexecutor urlExecutor;
@@ -25,6 +26,11 @@ public class EdxAPI implements Searchable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Long getId() {
+        return SOURCE_ID;
     }
 
 }

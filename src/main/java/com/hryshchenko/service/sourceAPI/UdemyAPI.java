@@ -10,6 +10,7 @@ import java.io.IOException;
 @Component
 public class UdemyAPI implements Searchable {
 
+    public static final Long SOURCE_ID = 3L;
     private static final String searchByValue = "https://www.udacity.com/public-api/v0/courses";
 
     private URLexecutor urlExecutor;
@@ -27,5 +28,10 @@ public class UdemyAPI implements Searchable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public Long getId() {
+        return SOURCE_ID;
     }
 }

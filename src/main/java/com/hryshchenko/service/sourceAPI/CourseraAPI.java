@@ -45,4 +45,8 @@ public class CourseraAPI implements Searchable {
                 .toString();
     }
 
+    @Override
+    public Long getId() {
+        return SOURCE_ID;
+    }
 }

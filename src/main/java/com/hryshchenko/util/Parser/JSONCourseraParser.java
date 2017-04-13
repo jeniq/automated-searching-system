@@ -1,4 +1,4 @@
-package com.hryshchenko.util.Parser;
+package com.hryshchenko.util.parser;
 
 import com.hryshchenko.model.dto.CourseDTO;
 import org.json.JSONArray;
@@ -27,6 +27,7 @@ public class JSONCourseraParser implements Parsable {
             courseDTO.setPictureUrl(array.getJSONObject(i).getString("photoUrl"));
             courseDTO.setStartTime(
                     new Timestamp(array.getJSONObject(i).getLong("startDate")));
+            courseDTO.setCourseSourceId(array.getJSONObject(i).getString("id"));
             courses.add(courseDTO);
         }
 

@@ -22,7 +22,7 @@ public class EdxAPI implements Searchable {
         try {
             return urlExecutor.askURL(searchByValue);
         } catch (IOException e) {
-            new RuntimeException(e);
+            e.printStackTrace();
         }
         return null;
     }

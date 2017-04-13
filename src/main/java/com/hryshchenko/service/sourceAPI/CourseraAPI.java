@@ -10,6 +10,8 @@ import java.io.IOException;
 @Component
 public class CourseraAPI implements Searchable {
 
+    private static final Long SOURCE_ID = 1L;
+    private static final String searchByValue = "https://api.coursera.org/api/courses.v1?q=search&query=";
     private URLexecutor urlExecutor;
 
     @Autowired
@@ -17,14 +19,12 @@ public class CourseraAPI implements Searchable {
         this.urlExecutor = urlExecutor;
     }
 
-    private static final String searchByValue = "https://api.coursera.org/api/courses.v1?q=search&query=";
-
     @Override
     public JSONObject find(String value) {
         try {
             return urlExecutor.askURL(buildSearchLink(value));
         } catch (IOException e) {
-            new RuntimeException(e);
+            e.printStackTrace();
         }
         return null;
     }

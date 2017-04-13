@@ -4,6 +4,14 @@ public class SearchDTO {
     private Long source;
     private String request;
 
+    public SearchDTO() {
+    }
+
+    public SearchDTO(Long source, String request) {
+        this.source = source;
+        this.request = request;
+    }
+
     public Long getSource() {
         return source;
     }

@@ -28,6 +28,8 @@ public class Course {
     private Source source;
     @Column(name = "picture_url")
     private String pictureUrl;
+    @Column(name = "course_source_id")
+    private String courseSourceId;
 
     public Course() {
     }
@@ -94,5 +96,13 @@ public class Course {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public String getCourseSourceId() {
+        return courseSourceId;
+    }
+
+    public void setCourseSourceId(String courseSourceId) {
+        this.courseSourceId = courseSourceId;
     }
 }

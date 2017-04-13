@@ -43,13 +43,22 @@ public class CourseRepository {
     @SuppressWarnings("unchecked")
     @Transactional
     public List<Course> getAll() {
-        return getSession().createQuery("from Course").list();
+        return getSession().createQuery("from Course").setMaxResults(10).list();
     }
 
+    @Transactional
+    public Course getCourseBySourceId(String courseSourceId) {
+        return (Course) getSession().createQuery("FROM Course WHERE course_source_id = :id")
+                .setParameter("id", courseSourceId)
+                .uniqueResult();
+    }
+
+    @Transactional
     public Course getById(long id) {
-        return (Course) getSession().load(Course.class, id);
+        return getSession().load(Course.class, id);
     }
 
+    @Transactional
     public void update(Course course) {
         getSession().update(course);
     }
@@ -59,10 +68,12 @@ public class CourseRepository {
         return criteria.add(Restrictions.like("name", name, MatchMode.ANYWHERE)).list();
     }
 
-    public List getCourseByNameAndSource(SearchDTO searchDTO) {
+    @Transactional
+    public List getCoursesByNameAndSource(SearchDTO searchDTO) {
         return getSession().createQuery("FROM Course WHERE name LIKE LOWER(:name) AND source = :source")
                 .setParameter("name", searchDTO.getRequest())
                 .setParameter("source", searchDTO.getSource())
                 .list();
     }
+
 }

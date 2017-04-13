@@ -9,23 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JSONEdxParser implements Parsable {
+public class JSONUdemyParser implements Parsable {
 
     @Override
     public List<CourseDTO> parseCourseJSON(JSONObject object) {
         List<CourseDTO> courses = new ArrayList<>();
         CourseDTO courseDTO;
 
-        JSONArray array = object.getJSONArray("results");
+        JSONArray array = object.getJSONArray("courses");
 
         for (int i = 0; i < array.length(); i++) {
             courseDTO = new CourseDTO();
-            courseDTO.setName(array.getJSONObject(i).getString("name"));
-            // courseDTO.setDescription(array.getJSONObject(i).getString("short_description"));
+            courseDTO.setName(array.getJSONObject(i).getString("title"));
+            // courseDTO.setDescription(array.getJSONObject(i).getString("summary"));
             courseDTO.setDescription("Check for long description"); // TODO long description causes error in db
             courseDTO.setPictureUrl(array.getJSONObject(i).getJSONArray("image").getJSONObject(1).getString("small"));
-           /* courseDTO.setStartTime(
-                    new Timestamp(array.getJSONObject(i).getString("start")));*/
             courses.add(courseDTO);
         }
 

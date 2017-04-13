@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class UdacityAPI implements Searchable {
+public class UdemyAPI implements Searchable {
 
     private static final String searchByValue = "https://www.udacity.com/public-api/v0/courses";
 
     private URLexecutor urlExecutor;
 
     @Autowired
-    public UdacityAPI(URLexecutor urlExecutor) {
+    public UdemyAPI(URLexecutor urlExecutor) {
         this.urlExecutor = urlExecutor;
     }
 
@@ -24,7 +24,7 @@ public class UdacityAPI implements Searchable {
         try {
             return urlExecutor.askURL(searchByValue);
         } catch (IOException e) {
-            new RuntimeException(e);
+            e.printStackTrace();
         }
         return null;
     }

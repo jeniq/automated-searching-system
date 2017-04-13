@@ -15,6 +15,7 @@ public class CourseDTO {
     private Category category;
     private Source source;
     private String pictureUrl;
+    private String courseSourceId;
 
     public Course toCourse() {
         Course course = new Course();
@@ -22,6 +23,7 @@ public class CourseDTO {
         course.setName(this.name);
         course.setDescription(this.description);
         course.setPictureUrl(this.pictureUrl);
+        course.setCourseSourceId(this.courseSourceId);
         if (this.startTime != null) {
             course.setStartTime(this.startTime);
         }
@@ -97,5 +99,13 @@ public class CourseDTO {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public String getCourseSourceId() {
+        return courseSourceId;
+    }
+
+    public void setCourseSourceId(String courseSourceId) {
+        this.courseSourceId = courseSourceId;
     }
 }

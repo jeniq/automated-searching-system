@@ -1,4 +1,4 @@
-package com.hryshchenko.util.Parser;
+package com.hryshchenko.util.parser;
 
 import com.hryshchenko.model.dto.CourseDTO;
 import org.json.JSONObject;

@@ -4,10 +4,14 @@ import com.hryshchenko.repository.course.CourseRepository;
 import com.hryshchenko.service.sourceAPI.CourseraAPI;
 import com.hryshchenko.service.sourceAPI.EdxAPI;
 import com.hryshchenko.service.sourceAPI.Searchable;
-import com.hryshchenko.util.Parser.JSONCourseraParser;
+import com.hryshchenko.util.parser.JSONCourseraParser;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SearchService {
@@ -33,7 +37,7 @@ public class SearchService {
         Searchable sourceAPI;
         // TODO fix string searching
         if (value.startsWith("\"") & value.endsWith("\"")) {
-            values = new String[]{value}; // Search by full request string
+            values = new String[]{value.replace("\"", "")}; // Search by full request string
         } else {
             values = value.split(SPACE); // Search by separate word
         }
@@ -46,7 +50,15 @@ public class SearchService {
             }
             sourceAPI = selectResource(Long.valueOf(resource));
             for (String request : values) {
-                courseRepository.saveAll(jsonCourseraParser.parseCourseJSON(sourceAPI.find(request)));
+                Optional<JSONObject> jsonObject = Optional.ofNullable(sourceAPI.find(request));
+                if (jsonObject.isPresent()) {
+                    courseRepository.saveAll(jsonCourseraParser.parseCourseJSON(jsonObject.get())
+                            .stream()
+                            .filter(c -> c != null)
+                            .filter(c -> courseRepository.getCourseBySourceId(c.getCourseSourceId()) == null)
+                            .collect(Collectors.toList())
+                    );
+                }
             }
         }
     }
@@ -58,7 +70,7 @@ public class SearchService {
             case "2": // edX
                 return edxAPI;
             case "3": // edX
-                return null; // TODO add Udacity
+                return null; // TODO add Udemy
             default:
                 return null;
         }

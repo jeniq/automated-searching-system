@@ -37,6 +37,14 @@
                     });
                 };
 
+                $scope.goToCourseSource = function (requestUrl) {
+                    window.open(requestUrl, '_blank');
+                };
+                
+                $scope.goToCoursesPage = function () {
+                    $location =  "/courses";  
+                };
+                
                 $scope.openCourseDetails = function (courseId) {
                     var requestUrl = "/api/course/" + courseId;
                     //$location.path("courses/" + courseId);

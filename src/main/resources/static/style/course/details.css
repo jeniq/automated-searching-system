@@ -1,3 +1,20 @@
 #detailsModal {
     height: 600px;
 }
+
+#courseTitle{
+    font-weight: 600;
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+#detailsHr{
+    margin-top: 10px;
+}
+
+#courseImg{
+    width: 200px;
+    height: 200px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}

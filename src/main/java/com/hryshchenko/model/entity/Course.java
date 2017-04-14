@@ -14,7 +14,7 @@ public class Course {
     private Long id;
     @Column
     private String name;
-    @Column
+    @Column(name = "description")
     private String description;
     @Column(name = "start_time")
     private Timestamp startTime;
@@ -30,6 +30,8 @@ public class Course {
     private String pictureUrl;
     @Column(name = "course_source_id")
     private String courseSourceId;
+    @Column(name="course_link")
+    private String courseLink;
 
     public Course() {
     }
@@ -104,5 +106,13 @@ public class Course {
 
     public void setCourseSourceId(String courseSourceId) {
         this.courseSourceId = courseSourceId;
+    }
+
+    public String getCourseLink() {
+        return courseLink;
+    }
+
+    public void setCourseLink(String courseLink) {
+        this.courseLink = courseLink;
     }
 }

@@ -2,28 +2,31 @@
     <div id="page-content-wrapper" ng-cloak>
         <div class="container-fluid">
             <div class="row content">
-                <div class="col-sm-12" >
-                    <p>{{ courseDetails.name }}</p>
-                    <hr>
+                <div class="col-sm-12">
+                    <p id="courseTitle">{{ courseDetails.name }}</p>
+                    <hr id="detailsHr">
                     <div>
                         <table>
                             <tbody>
                             <tr>
-                                <td><img class="resourceImg" src="{{ courseDetails.pictureUrl }}"></td>
-                                <td>{{ courseDetails.description }}</td>
+                                <td><img id="courseImg" src="{{ courseDetails.pictureUrl }}"></td>
+                                <td>{{ courseDetails.description }} <br>
+                                    <button class="btn btn-info" ng-click="goToCourseSource(courseDetails.courseLink)">
+                                        Детальніше
+                                    </button></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td>Початок: {{ courseDetails.startDate }}</td>
+                                <td>Початок: {{ courseDetails.startTime | date: "dd.MM.yyyy HH:mm" }}</td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td>
-                                    <button>See at site</button>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
+                        <p>Джерело {{ courseDetails.source.name }}</p>
                     </div>
                 </div>
             </div>

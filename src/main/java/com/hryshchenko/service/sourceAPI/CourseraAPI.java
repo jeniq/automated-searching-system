@@ -10,6 +10,7 @@ import java.io.IOException;
 @Component
 public class CourseraAPI implements Searchable {
 
+    public static final String COURSE_LINK = "https://www.coursera.org/";
     private static final Long SOURCE_ID = 1L;
     private static final String searchByValue = "https://api.coursera.org/api/courses.v1?q=search&query=";
     private URLexecutor urlExecutor;

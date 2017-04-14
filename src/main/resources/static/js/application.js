@@ -5,6 +5,7 @@
         "ngAnimate",
         "ngTouch",
         "ui.bootstrap",
-        "cgBusy"
+        "cgBusy",
+        "googlechart"
     ])
 })();

@@ -18,6 +18,10 @@
                         templateUrl: "",
                         controller: "CourseController"
                     })
+                    .when("/report", {
+                        templateUrl: "/static/page/report/report-page.html",
+                        controller: "ReportController"
+                    })
                     .otherwise({
                         templateUrl: "/static/page/404.html"
                     });

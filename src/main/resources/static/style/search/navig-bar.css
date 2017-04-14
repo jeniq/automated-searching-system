@@ -1,4 +1,21 @@
 .navbar {
     margin-bottom: 0;
     border-radius: 0;
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.navbar-brand {
+    margin-top: 3px;
+    font-size: 20px !important;
+    font-weight: 600;
+    color: rgba(38, 134, 255, 0.8) !important;
+}
+
+.navbar a:hover {
+    color: rgba(38, 134, 255, 0.8) !important;
+}
+
+.navbar a{
+    margin-top: 3px;
+    font-size: 16px;
 }

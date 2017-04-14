@@ -1,8 +1,46 @@
+.mainContent {
+    margin-left: 15px;
+}
+
 .resourceImg {
     width: 125px;
     height: 125px;
 }
 
 #courseList tr:hover {
-    background-color: rgba(253, 255, 139, 0.52);
+    background-color: rgba(46, 41, 43, 0.03);
+}
+
+.mainContent tr {
+    outline: thin solid rgba(0, 0, 0, 0.05);
+}
+
+.mainContent tr td {
+    padding: 20px;
+}
+
+.coursesTable {
+    border: 5px solid rgba(0, 0, 0, 0);
+    border-collapse: separate;
+    width: 100%;
+    border-spacing: 0 15px;
+}
+
+.courseTitle{
+    text-align: left;
+    font-size: 20px;
+}
+
+.show-more-text:hover{
+    text-decoration: underline;
+}
+
+.show-more-text{
+    display: inline-block;
+    cursor: pointer;
+}
+
+.show-more-wrapper{
+    text-align: center;
+    margin-bottom: 30px;
 }

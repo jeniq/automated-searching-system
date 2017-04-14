@@ -5,15 +5,30 @@
             <nav-bar></nav-bar>
 
             <div class="col-sm-2 sidenav">
-                <h4>Оберіть ресурс</h4>
+                <h4>Джерело</h4>
                 <ul class="nav nav-pills nav-stacked" ng-repeat="source in sourceList">
                     <li><input type="checkbox" ng-model="request.source[source.id]" ng-true-value="{{source.id}}"
                                ng-false-value="">{{ source.name }}
                     </li>
                 </ul>
                 <br>
+                <h4>Категорія</h4>
+                <ul class="nav nav-pills nav-stacked">
+                    <li><input type="checkbox" value="1">Технічні науки</li>
+                    <li><input type="checkbox" value="2">Гуманітарні науки</li>
+                    <li><input type="checkbox" value="3">Комп'ютерні науки</li>
+                    <li><input type="checkbox" value="3">Вивчення мов</li>
+                    <li><input type="checkbox" value="3">Бізнес</li>
+                </ul>
+                <br>
+                <h4>Мова</h4>
+                <ul class="nav nav-pills nav-stacked">
+                    <li><input type="checkbox" value="1">Українська</li>
+                    <li><input type="checkbox" value="2">Англійська</li>
+                    <li><input type="checkbox" value="3">Російська</li>
+                </ul>
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-9 mainContent">
                 <form role="form" id="searchBar">
                     <div class="input-group">
                         <input type="text" class="form-control input-sm" ng-model="request.string">
@@ -25,33 +40,29 @@
                     </div>
                 </form>
 
-                <div cg-busy="{promise:courseList,message:'Зачейкате...',backdrop:true,minDuration:2000}">
-                <hr>
-
-                <div ng-hide="showCoursesTable()">
-                    <p>Виконайте пошук необхідного курсу за допомою пошукового рядку.<br>
-                        За замовчуванням пошук виконується по ключовим словам.<br>
-                        Якщо необхідно знайти за фразою - візьміть її в лапки.</p>
-                </div>
+                <div cg-busy="{promise:promise,message:'Зачейкате...',backdrop:true,minDuration:2000}">
+                    <hr>
+                    <div ng-hide="showCoursesTable()">
+                        <p>Виконайте пошук необхідного курсу за допомою пошукового рядку.<br>
+                            За замовчуванням пошук виконується по ключовим словам.<br>
+                            Якщо необхідно знайти за фразою - візьміть її в лапки.</p>
+                    </div>
                     <table class="coursesTable" ng-show="showCoursesTable()">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Назва</th>
-                            <th>Опис курсу</th>
-                        </tr>
-                        </thead>
                         <tbody id="courseList">
                         <tr ng-repeat="course in courseList" ng-click="openCourseDetails(course.id)">
                             <td><img class="resourceImg" src="{{ course.pictureUrl }}"></td>
-                            <td>{{ course.name }}</td>
-                            <td>{{ course.description }}</td>
+                            <td><p class="courseTitle">{{ course.name }}</p>
+                                <p>{{ course.description }}</p></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
+                <div ng-click="" class="show-more-wrapper"
+                     ng-show="courseList.length > 5">
+                    <p class="show-more-text btn btn-default">Показати наступні</p>
+                </div>
 
+            </div>
         </div>
     </div>
 </div>

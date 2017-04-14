@@ -67,7 +67,7 @@ public class CourseRepository {
 
     public List getCourseByName(String name) {
         Criteria criteria = getSession().createCriteria(Course.class);
-        return criteria.add(Restrictions.like("name", name, MatchMode.ANYWHERE)).list();
+        return criteria.add(Restrictions.ilike("name", name, MatchMode.ANYWHERE)).list();
     }
 
     @Transactional

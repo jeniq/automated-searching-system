@@ -3,7 +3,7 @@
         .controller("CourseController", ["$uibModal", "$scope", "$http", "$location",
             function ($uibModal, $scope, $http, $location) {
 
-                $scope.courseDetails = {name: "COURSE NAME!!!"};
+                $scope.courseDetails = {};
                 $scope.status = '  ';
                 $scope.sourceList = [];
                 $scope.request = {
@@ -15,8 +15,10 @@
                 $scope.searchCourseBar = function () {
                     var requestUrl = "/api/course/search?source=" + $scope.request.source.toString() + "&request=" + $scope.request.string;
 
-                    $scope.getRequest(requestUrl).then(function (response) {
+
+                    $scope.courseList = $scope.getRequest(requestUrl).then(function (response) {
                         $scope.courseList = response.data;
+
                     }, function errorCallback(response) {
                     });
                 };
@@ -40,11 +42,11 @@
                 $scope.goToCourseSource = function (requestUrl) {
                     window.open(requestUrl, '_blank');
                 };
-                
+
                 $scope.goToCoursesPage = function () {
-                    $location =  "/courses";  
+                    $location = "/courses";
                 };
-                
+
                 $scope.openCourseDetails = function (courseId) {
                     var requestUrl = "/api/course/" + courseId;
                     //$location.path("courses/" + courseId);
@@ -61,7 +63,7 @@
                         templateUrl: "/static/page/course/details-modal.html",
                         scope: $scope
                     });
-                        //.closed.then(function(){$location.path("courses")});
+                    //.closed.then(function(){$location.path("courses")});
                 };
 
                 // http

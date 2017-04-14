@@ -24,7 +24,6 @@
                 </ul>
                 <br>
             </div>
-
             <div class="col-sm-9">
                 <form role="form" id="searchBar">
                     <div class="input-group">
@@ -37,6 +36,7 @@
                     </div>
                 </form>
 
+                <div cg-busy="{promise:courseList,message:'Зачейкате...',backdrop:true,minDuration:2000}">
                 <hr>
 
                 <div ng-hide="showCoursesTable()">
@@ -44,22 +44,23 @@
                         За замовчуванням пошук виконується по ключовим словам.<br>
                         Якщо необхідно знайти за фразою - візьміть її в лапки.</p>
                 </div>
-                <table class="coursesTable" ng-show="showCoursesTable()">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th>Назва</th>
-                        <th>Опис курсу</th>
-                    </tr>
-                    </thead>
-                    <tbody id="courseList">
-                    <tr ng-repeat="course in courseList" ng-click="openCourseDetails(course.id)">
-                        <td><img class="resourceImg" src="{{ course.pictureUrl }}"></td>
-                        <td>{{ course.name }}</td>
-                        <td>{{ course.description }}</td>
-                    </tr>
-                    </tbody>
-                </table>
+                    <table class="coursesTable" ng-show="showCoursesTable()">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Назва</th>
+                            <th>Опис курсу</th>
+                        </tr>
+                        </thead>
+                        <tbody id="courseList">
+                        <tr ng-repeat="course in courseList" ng-click="openCourseDetails(course.id)">
+                            <td><img class="resourceImg" src="{{ course.pictureUrl }}"></td>
+                            <td>{{ course.name }}</td>
+                            <td>{{ course.description }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </div>

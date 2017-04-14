@@ -4,6 +4,7 @@
         "ngRoute",
         "ngAnimate",
         "ngTouch",
-        "ui.bootstrap"
+        "ui.bootstrap",
+        "cgBusy"
     ])
 })();

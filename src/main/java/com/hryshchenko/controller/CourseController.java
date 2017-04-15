@@ -24,17 +24,18 @@ public class CourseController {
     }
 
     @GetMapping(value = "/all", produces = JSON_MEDIA_TYPE)
-    public ResponseEntity<?> getAllCourses() {
-        return ResponseEntity.ok(courseService.getAllCourses());
+    public ResponseEntity<?> getAllCourses(@RequestParam(name = "size") Integer pageSize) {
+        return ResponseEntity.ok(courseService.getAllCourses(pageSize));
     }
 
     @GetMapping(value = "/category", produces = JSON_MEDIA_TYPE)
     public ResponseEntity<?> getCoursesByCategory(@RequestBody CategoryDTO categoryDTO) {
-        return ResponseEntity.ok(courseService.getAllCourses());
+       // return ResponseEntity.ok(courseService.getAllCourses());
+        return null;
     }
 
     @GetMapping(value = "/search", produces = JSON_MEDIA_TYPE)
-    public ResponseEntity<?> searchCourse(@RequestParam String request, @RequestParam String source) {
-        return ResponseEntity.ok(courseService.search(request, source));
+    public ResponseEntity<?> searchCourse(@RequestParam String request, @RequestParam String source, @RequestParam(name = "size") Integer pageSize) {
+        return ResponseEntity.ok(courseService.search(request, source, pageSize));
     }
 }

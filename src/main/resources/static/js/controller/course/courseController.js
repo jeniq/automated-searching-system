@@ -3,6 +3,9 @@
         .controller("CourseController", ["$uibModal", "$scope", "$http", "$location",
             function ($uibModal, $scope, $http, $location) {
 
+                $scope.pageSize = 5;
+                $scope.cachedCourseListSize;
+                $scope.showPaginationButton = true;
                 $scope.courseDetails = {};
                 $scope.status = '  ';
                 $scope.sourceList = [];
@@ -13,12 +16,23 @@
                 $scope.courseList = [];
 
                 $scope.searchCourseBar = function () {
-                    var requestUrl = "/api/course/search?source=" + $scope.request.source.toString() + "&request=" + $scope.request.string;
+                    $scope.pageSize = 5;
+                    $scope.showPaginationButton = true;
+                    $scope.getCourseList();
+                };
+                
+                $scope.getCourseList = function () {
+                    var requestUrl = "/api/course/search?source=" + $scope.request.source.toString() +
+                        "&request=" + $scope.request.string + "&size=" + $scope.pageSize;
+                    $scope.pageSize = $scope.pageSize + 5;
 
-
-                    $scope.courseList = $scope.getRequest(requestUrl).then(function (response) {
+                    $scope.cachedCourseListSize = $scope.courseList.length;
+                    $scope.getRequest(requestUrl).then(function (response) {
                         $scope.courseList = response.data;
 
+                        if ($scope.cachedCourseListSize == $scope.courseList.length) {
+                            $scope.showPaginationButton = false;
+                        }
                     }, function errorCallback(response) {
                     });
                 };
@@ -38,6 +52,7 @@
                     }, function errorCallback(response) {
                     });
                 };
+
 
                 $scope.goToCourseSource = function (requestUrl) {
                     window.open(requestUrl, '_blank');

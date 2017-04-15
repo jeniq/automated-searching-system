@@ -1,6 +1,7 @@
 package com.hryshchenko.service.course;
 
 
+import com.hryshchenko.model.dto.SearchDTO;
 import com.hryshchenko.model.entity.Course;
 import com.hryshchenko.model.event.SearchRequest;
 import com.hryshchenko.repository.course.CourseRepository;
@@ -32,12 +33,12 @@ public class CourseService {
     }
 
     @Transactional
-    public List<Course> getAllCourses() {
-        return courseRepository.getAll();
+    public List<Course> getAllCourses(Integer pageSize) {
+        return courseRepository.getAll(pageSize);
     }
 
     @Transactional
-    public List<Course> search(String request, String resource) {
+    public List<Course> search(String request, String resource, Integer pageSize) {
         List<Course> courses = new ArrayList<>();
 
         // Activate search at resources in new threads
@@ -52,8 +53,19 @@ public class CourseService {
             values = request.split(SPACE); // Search by separate word
         }
 
-        for (String value : values) {
-            courses.addAll(courseRepository.getCourseByName(value));
+        String[] sources = resource.split(",");
+
+        if (sources.length == 1){ // Interrupt search without selected source
+            return courseRepository.getAll(pageSize);
+        }
+
+        for (String r : sources){
+            if (r.equals("") || r.equals(",")){
+                continue;
+            }
+            for (String value : values) {
+                courses.addAll(courseRepository.getCoursesByNameAndSource(new SearchDTO(Long.valueOf(r), value), pageSize));
+            }
         }
 
         return courses;

@@ -42,8 +42,8 @@ public class CourseRepository {
 
     @SuppressWarnings("unchecked")
     @Transactional
-    public List<Course> getAll() {
-        return getSession().createQuery("from Course").setMaxResults(10).list();
+    public List<Course> getAll(Integer pageSize) {
+        return getSession().createQuery("from Course ORDER BY id").setFirstResult(0).setMaxResults(pageSize).list();
     }
 
     @Transactional
@@ -70,11 +70,12 @@ public class CourseRepository {
         return criteria.add(Restrictions.ilike("name", name, MatchMode.ANYWHERE)).list();
     }
 
-    @Transactional
-    public List getCoursesByNameAndSource(SearchDTO searchDTO) {
-        return getSession().createQuery("FROM Course WHERE name LIKE LOWER(:name) AND source = :source")
-                .setParameter("name", searchDTO.getRequest())
-                .setParameter("source", searchDTO.getSource())
+    public List getCoursesByNameAndSource(SearchDTO searchDTO, Integer pageSize) {
+        Criteria criteria = getSession().createCriteria(Course.class);
+        return criteria.add(Restrictions.ilike("name", searchDTO.getRequest(), MatchMode.ANYWHERE))
+                .add(Restrictions.eq("source.id", searchDTO.getSource()))
+                .setFirstResult(0)
+                .setMaxResults(pageSize)
                 .list();
     }
 

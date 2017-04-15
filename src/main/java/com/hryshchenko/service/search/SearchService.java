@@ -46,7 +46,10 @@ public class SearchService {
         }
         String[] sourceList = source.split(",");
 
-        // TODO if sourceList empty - search at all resources
+        if (sourceList.length == 1){ // Interrupt search without selected source
+            return;
+        }
+
         for (String resource : sourceList) { // Cache to database each course from each selected resources
             if (resource.isEmpty() || resource.equals(",")) { // TODO fix
                 continue;

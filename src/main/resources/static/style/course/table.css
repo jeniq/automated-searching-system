@@ -12,6 +12,7 @@
 }
 
 .mainContent tr {
+    cursor: pointer !important;
     outline: thin solid rgba(0, 0, 0, 0.05);
 }
 

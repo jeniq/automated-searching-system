@@ -14,6 +14,7 @@
                     source: [] // TODO current: ,id,id,id or ,,id
                 };
                 $scope.courseList = [];
+                $scope.promise;
 
                 $scope.searchCourseBar = function () {
                     $scope.pageSize = 5;
@@ -27,12 +28,13 @@
                     $scope.pageSize = $scope.pageSize + 5;
 
                     $scope.cachedCourseListSize = $scope.courseList.length;
-                    $scope.getRequest(requestUrl).then(function (response) {
+                    $scope.promise = $scope.getRequest(requestUrl).then(function (response) {
                         $scope.courseList = response.data;
 
                         if ($scope.cachedCourseListSize == $scope.courseList.length) {
                             $scope.showPaginationButton = false;
                         }
+
                     }, function errorCallback(response) {
                     });
                 };
@@ -40,7 +42,7 @@
                 $scope.getAllCourses = function () {
                     var requestUrl = "/api/course/all?size=" + $scope.pageSize;
                     $scope.pageSize = $scope.pageSize + 5;
-                    
+
                     $scope.getRequest(requestUrl).then(function (response) {
                         $scope.courseList = response.data;
                     });

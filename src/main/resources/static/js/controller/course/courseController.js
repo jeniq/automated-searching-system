@@ -20,7 +20,7 @@
                     $scope.showPaginationButton = true;
                     $scope.getCourseList();
                 };
-                
+
                 $scope.getCourseList = function () {
                     var requestUrl = "/api/course/search?source=" + $scope.request.source.toString() +
                         "&request=" + $scope.request.string + "&size=" + $scope.pageSize;
@@ -34,6 +34,15 @@
                             $scope.showPaginationButton = false;
                         }
                     }, function errorCallback(response) {
+                    });
+                };
+
+                $scope.getAllCourses = function () {
+                    var requestUrl = "/api/course/all?size=" + $scope.pageSize;
+                    $scope.pageSize = $scope.pageSize + 5;
+                    
+                    $scope.getRequest(requestUrl).then(function (response) {
+                        $scope.courseList = response.data;
                     });
                 };
 
@@ -95,6 +104,6 @@
 
                 // call
                 $scope.getAllSources();
-
+                $scope.getAllCourses();
             }]);
 })();

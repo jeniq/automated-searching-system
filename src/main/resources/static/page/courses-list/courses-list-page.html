@@ -31,7 +31,9 @@
             <div class="col-sm-9 mainContent">
                 <form role="form" id="searchBar">
                     <div class="input-group">
-                        <input type="text" class="form-control input-sm" ng-model="request.string">
+                        <input type="text" class="form-control input-sm" ng-model="request.string"
+                               title="Виконайте пошук необхідного курсу за ключовими словами. Якщо необхідно знайти за фразою - візьміть її в лапки."
+                               required>
               <span class="input-group-btn">
                 <button class="btn btn-default btn-sm" ng-click="searchCourseBar()">
                     <span class="glyphicon glyphicon-search"></span>
@@ -42,12 +44,7 @@
 
                 <div cg-busy="{promise:promise,message:'Зачейкате...',backdrop:true,minDuration:2000}">
                     <hr>
-                    <div ng-hide="showCoursesTable()">
-                        <p>Виконайте пошук необхідного курсу за допомою пошукового рядку.<br>
-                            За замовчуванням пошук виконується по ключовим словам.<br>
-                            Якщо необхідно знайти за фразою - візьміть її в лапки.</p>
-                    </div>
-                    <table class="coursesTable" ng-show="showCoursesTable()">
+                    <table class="coursesTable">
                         <tbody id="courseList">
                         <tr ng-repeat="course in courseList" ng-click="openCourseDetails(course.id)">
                             <td><img class="resourceImg" src="{{ course.pictureUrl }}"></td>

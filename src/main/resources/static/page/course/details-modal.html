@@ -3,7 +3,8 @@
         <div class="container-fluid">
             <div class="row content">
                 <div class="col-sm-12">
-                    <p id="courseTitle">{{ courseDetails.name }}</p>
+                    <p id="courseTitle">{{ courseDetails.name }} <a target="_blank" href="{{courseDetails.source.link}}" id="courseDetailsSource"><i>{{ courseDetails.source.name }}</i></a>
+                    </p>
                     <hr id="detailsHr">
                     <div>
                         <table>
@@ -11,22 +12,21 @@
                             <tr>
                                 <td><img id="courseImg" src="{{ courseDetails.pictureUrl }}"></td>
                                 <td>{{ courseDetails.description }} <br>
-                                    <button class="btn btn-info" ng-click="goToCourseSource(courseDetails.courseLink)">
-                                        Детальніше
-                                    </button></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>Початок: {{ courseDetails.startTime | date: "dd.MM.yyyy HH:mm" }}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>
+                                    <div id="moreBtn">
+                                        <button class="btn btn-info"
+                                                ng-click="goToCourseSource(courseDetails.courseLink)">
+                                            Детальніше
+                                        </button>
+                                    </div>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td>Початок: {{ courseDetails.startTime | date: "dd.MM.yyyy" }}</td>
+                                <td></td>
                             </tr>
                             </tbody>
                         </table>
-                        <p>Джерело {{ courseDetails.source.name }}</p>
+                        <p id="courseDetailsCategory">{{ courseDetails.category }}</p>
                     </div>
                 </div>
             </div>

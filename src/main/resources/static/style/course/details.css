@@ -1,20 +1,38 @@
 #detailsModal {
-    height: 600px;
+    height: 400px;
 }
 
-#courseTitle{
+#courseTitle {
     font-weight: 600;
     margin-top: 15px;
     font-size: 18px;
 }
 
-#detailsHr{
+#detailsHr {
     margin-top: 10px;
 }
 
-#courseImg{
+#courseImg {
     height: 200px;
     margin-right: 10px;
     margin-bottom: 10px;
 }
 
+#moreBtn {
+    margin-top: 5px;
+    text-align: center !important;
+}
+
+#courseDetailsSource {
+    font-weight: 400;
+    color: rgba(38, 134, 255, 0.8) !important;
+    float: right;
+}
+
+#courseDetailsSource:hover {
+    color: rgb(38, 107, 210) !important;
+}
+
+#courseDetailsCategory {
+    margin-top: 15px;
+}

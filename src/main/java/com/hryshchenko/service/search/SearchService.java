@@ -5,8 +5,10 @@ import com.hryshchenko.repository.course.CourseRepository;
 import com.hryshchenko.service.sourceAPI.CourseraAPI;
 import com.hryshchenko.service.sourceAPI.EdxAPI;
 import com.hryshchenko.service.sourceAPI.Searchable;
+import com.hryshchenko.service.sourceAPI.TedAPI;
 import com.hryshchenko.util.parser.JSONCourseraParser;
 import com.hryshchenko.util.parser.JSONEdxParser;
+import com.hryshchenko.util.parser.JSONTedParser;
 import com.hryshchenko.util.parser.Parsable;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +23,22 @@ public class SearchService {
     public static final String SPACE = " ";
     private JSONCourseraParser jsonCourseraParser;
     private JSONEdxParser jsonEdxParser;
+    private JSONTedParser jsonTedParser;
     private CourseraAPI courseraAPI;
     private EdxAPI edxAPI;
+    private TedAPI tedAPI;
     private CourseRepository courseRepository;
 
     @Autowired
-    public SearchService(JSONCourseraParser jsonCourseraParser, JSONEdxParser jsonEdxParser,
-                         CourseraAPI courseraAPI, EdxAPI edxAPI,
+    public SearchService(JSONCourseraParser jsonCourseraParser, JSONEdxParser jsonEdxParser, JSONTedParser jsonTedParser,
+                         CourseraAPI courseraAPI, EdxAPI edxAPI, TedAPI tedAPI,
                          CourseRepository courseRepository) {
         this.jsonCourseraParser = jsonCourseraParser;
         this.jsonEdxParser = jsonEdxParser;
+        this.jsonTedParser = jsonTedParser;
         this.courseraAPI = courseraAPI;
         this.edxAPI = edxAPI;
+        this.tedAPI = tedAPI;
         this.courseRepository = courseRepository;
     }
 
@@ -82,7 +88,7 @@ public class SearchService {
             case "2": // edX
                 return edxAPI;
             default:
-                return null;
+                return tedAPI;
         }
     }
 
@@ -93,7 +99,7 @@ public class SearchService {
             case "2": // edX
                 return jsonEdxParser;
             default:
-                return null;
+                return jsonTedParser;
         }
     }
 }

@@ -55,6 +55,12 @@
 			<artifactId>json</artifactId>
 			<version>20160810</version>
 		</dependency>
+		<!--HTML-->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.10.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>

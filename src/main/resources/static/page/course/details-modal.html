@@ -21,7 +21,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Початок: {{ courseDetails.startTime | date: "dd.MM.yyyy" }}</td>
+                                <td ng-show="courseDetails.startTime != null">Початок: {{ courseDetails.startTime | date: "dd.MM.yyyy" }}</td>
                                 <td></td>
                             </tr>
                             </tbody>

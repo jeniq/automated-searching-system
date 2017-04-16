@@ -14,7 +14,7 @@ import static com.hryshchenko.service.sourceAPI.CourseraAPI.COURSE_LINK;
 @Component
 public class JSONCourseraParser implements Parsable {
 
-    private final static int DESCRIPTION_LENGTH = 300;
+    public final static int DESCRIPTION_LENGTH = 300;
 
     // Coursera JSON
     public List<CourseDTO> parseCourseJSON(JSONObject object) {
@@ -29,7 +29,6 @@ public class JSONCourseraParser implements Parsable {
             String description = array.getJSONObject(i).getString("description");
             description = description.length() > DESCRIPTION_LENGTH ? description.substring(0,300) + "..." : description;
             courseDTO.setDescription(description);
-            //courseDTO.setDescription("Check for long description"); // TODO long description causes error in db
             courseDTO.setPictureUrl(array.getJSONObject(i).getString("photoUrl"));
             courseDTO.setStartTime(
                     new Timestamp(array.getJSONObject(i).getLong("startDate")));

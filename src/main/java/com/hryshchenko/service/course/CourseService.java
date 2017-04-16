@@ -55,12 +55,12 @@ public class CourseService {
 
         String[] sources = resource.split(",");
 
-        if (sources.length == 1){ // Interrupt search without selected source
+        if (sources.length == 1) { // Interrupt search without selected source
             return courseRepository.getAll(pageSize);
         }
-
-        for (String r : sources){
-            if (r.equals("") || r.equals(",")){
+        // TODO fix when no one source selected, nothing returns
+        for (String r : sources) {
+            if (r.equals("") || r.equals(",")) {
                 continue;
             }
             for (String value : values) {

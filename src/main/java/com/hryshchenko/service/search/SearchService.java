@@ -1,18 +1,18 @@
 package com.hryshchenko.service.search;
 
-import com.hryshchenko.model.dto.CourseDTO;
 import com.hryshchenko.model.entity.Source;
 import com.hryshchenko.repository.course.CourseRepository;
 import com.hryshchenko.service.sourceAPI.CourseraAPI;
 import com.hryshchenko.service.sourceAPI.EdxAPI;
 import com.hryshchenko.service.sourceAPI.Searchable;
 import com.hryshchenko.util.parser.JSONCourseraParser;
+import com.hryshchenko.util.parser.JSONEdxParser;
+import com.hryshchenko.util.parser.Parsable;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -20,14 +20,17 @@ import java.util.stream.Collectors;
 public class SearchService {
     public static final String SPACE = " ";
     private JSONCourseraParser jsonCourseraParser;
+    private JSONEdxParser jsonEdxParser;
     private CourseraAPI courseraAPI;
     private EdxAPI edxAPI;
     private CourseRepository courseRepository;
 
     @Autowired
-    public SearchService(JSONCourseraParser jsonCourseraParser, CourseraAPI courseraAPI, EdxAPI edxAPI,
+    public SearchService(JSONCourseraParser jsonCourseraParser, JSONEdxParser jsonEdxParser,
+                         CourseraAPI courseraAPI, EdxAPI edxAPI,
                          CourseRepository courseRepository) {
         this.jsonCourseraParser = jsonCourseraParser;
+        this.jsonEdxParser = jsonEdxParser;
         this.courseraAPI = courseraAPI;
         this.edxAPI = edxAPI;
         this.courseRepository = courseRepository;
@@ -38,6 +41,7 @@ public class SearchService {
     public void search(String value, String source) {
         String[] values;
         Searchable sourceAPI;
+        Parsable parser;
         // TODO fix string searching
         if (value.startsWith("\"") & value.endsWith("\"")) {
             values = new String[]{value.replace("\"", "")}; // Search by full request string
@@ -46,7 +50,7 @@ public class SearchService {
         }
         String[] sourceList = source.split(",");
 
-        if (sourceList.length == 1){ // Interrupt search without selected source
+        if (sourceList.length == 1) { // Interrupt search without selected source
             return;
         }
 
@@ -55,14 +59,15 @@ public class SearchService {
                 continue;
             }
             sourceAPI = selectResource(Long.valueOf(resource));
+            parser = selectParser(Long.valueOf(resource));
             for (String request : values) {
                 Optional<JSONObject> jsonObject = Optional.ofNullable(sourceAPI.find(request));
                 if (jsonObject.isPresent()) { // Avoid repeating courses in database
-                    courseRepository.saveAll(jsonCourseraParser.parseCourseJSON(jsonObject.get())
+                    courseRepository.saveAll(parser.parseCourseJSON(jsonObject.get())
                             .stream()
                             .filter(c -> c != null)
                             .filter(c -> courseRepository.getCourseBySourceId(c.getCourseSourceId()) == null)
-                            .peek(c -> c.setSource(new Source(1L)))
+                            .peek(c -> c.setSource(new Source(Long.valueOf(resource))))
                             .collect(Collectors.toList())
                     );
                 }
@@ -76,8 +81,17 @@ public class SearchService {
                 return courseraAPI;
             case "2": // edX
                 return edxAPI;
-            case "3": // edX
-                return null; // TODO add Udemy
+            default:
+                return null;
+        }
+    }
+
+    private Parsable selectParser(Long resourceId) {
+        switch (resourceId.toString()) {
+            case "1": // Coursera
+                return jsonCourseraParser;
+            case "2": // edX
+                return jsonEdxParser;
             default:
                 return null;
         }

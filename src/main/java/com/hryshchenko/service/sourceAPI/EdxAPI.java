@@ -2,6 +2,7 @@ package com.hryshchenko.service.sourceAPI;
 
 import com.hryshchenko.util.URLexecutor;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -10,10 +11,12 @@ import java.io.IOException;
 public class EdxAPI implements Searchable {
 
     public static final Long SOURCE_ID = 2L;
-    private static final String searchByValue = "https://courses.edx.org/api/courses/v1/courses/";
+    public static final String COURSE_LINK = "https://www.edx.org/course/";
+    private static final String searchByValue = "https://www.edx.org/api/v1/catalog/search?query=";
 
     private URLexecutor urlExecutor;
 
+    @Autowired
     public EdxAPI(URLexecutor urlExecutor) {
         this.urlExecutor = urlExecutor;
     }
@@ -21,7 +24,7 @@ public class EdxAPI implements Searchable {
     @Override
     public JSONObject find(String value) {
         try {
-            return urlExecutor.askURL(searchByValue);
+            return urlExecutor.askURL(searchByValue + value);
         } catch (IOException e) {
             e.printStackTrace();
         }

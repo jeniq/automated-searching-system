@@ -30,8 +30,11 @@ public class Course {
     private String pictureUrl;
     @Column(name = "course_source_id")
     private String courseSourceId;
-    @Column(name="course_link")
+    @Column(name = "course_link")
     private String courseLink;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "language_id")
+    private Language language;
 
     public Course() {
     }
@@ -114,5 +117,13 @@ public class Course {
 
     public void setCourseLink(String courseLink) {
         this.courseLink = courseLink;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 }

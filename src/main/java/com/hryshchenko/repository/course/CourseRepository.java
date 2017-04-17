@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -43,7 +44,7 @@ public class CourseRepository {
     @SuppressWarnings("unchecked")
     @Transactional
     public List<Course> getAll(Integer pageSize) {
-        return getSession().createQuery("from Course ORDER BY id").setFirstResult(0).setMaxResults(pageSize).list();
+        return getSession().createQuery("from Course ORDER BY id DESC").setFirstResult(0).setMaxResults(pageSize).list();
     }
 
     @Transactional
@@ -76,7 +77,30 @@ public class CourseRepository {
                 .add(Restrictions.eq("source.id", searchDTO.getSource()))
                 .setFirstResult(0)
                 .setMaxResults(pageSize)
+                .addOrder(Order.desc("id"))
                 .list();
+    }
+
+    public List getCourses(SearchDTO searchDTO) {
+        Criteria criteria = getSession().createCriteria(Course.class);
+
+        criteria.add(Restrictions.ilike("name", searchDTO.getRequest(), MatchMode.ANYWHERE))
+                .addOrder(Order.desc("id"));
+
+        if (searchDTO.getSources() != null) {
+            criteria.add(Restrictions.in("source", searchDTO.getSources()));
+        }
+        if (searchDTO.getLanguages() != null) {
+            criteria.add(Restrictions.in("language", searchDTO.getLanguages()));
+        }
+        if (searchDTO.getCategories() != null) {
+            criteria.add(Restrictions.in("category", searchDTO.getCategories()));
+        }
+        if (searchDTO.getPageSize() != null) {
+            criteria.setFirstResult(0).setMaxResults(searchDTO.getPageSize());
+        }
+
+        return criteria.list();
     }
 
 }

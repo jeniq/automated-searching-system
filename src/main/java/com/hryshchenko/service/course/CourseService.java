@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,16 +31,14 @@ public class CourseService {
         return courseRepository.getById(id);
     }
 
-    @Transactional
     public List<Course> getAllCourses(Integer pageSize) {
         return courseRepository.getAll(pageSize);
     }
 
-    @Transactional
     public List<Course> search(String request, String resource, Integer pageSize) {
         List<Course> courses = new ArrayList<>();
 
-        // Activate search at resources in new threads
+        // Activate search at original sources in new threads
         eventPublisher.publishEvent(new SearchRequest(request, resource));
 
         // Find cached results in database
@@ -59,15 +56,20 @@ public class CourseService {
             return courseRepository.getAll(pageSize);
         }
         // TODO fix when no one source selected, nothing returns
-        for (String r : sources) {
-            if (r.equals("") || r.equals(",")) {
+        for (String s : sources) {
+            if (s.equals("") || s.equals(",")) {
                 continue;
             }
             for (String value : values) {
-                courses.addAll(courseRepository.getCoursesByNameAndSource(new SearchDTO(Long.valueOf(r), value), pageSize));
+                courses.addAll(
+                        courseRepository.getCoursesByNameAndSource(new SearchDTO(Long.valueOf(s), value), pageSize));
             }
         }
 
         return courses;
+    }
+
+    public List<Course> search(SearchDTO searchDTO, Integer pageSize) {
+        return null;
     }
 }

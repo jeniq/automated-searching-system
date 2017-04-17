@@ -11,7 +11,9 @@
                 $scope.sourceList = [];
                 $scope.request = {
                     string: "",
-                    source: [] // TODO current: ,id,id,id or ,,id
+                    source: [],
+                    category: [],
+                    language: []
                 };
                 $scope.courseList = [];
                 $scope.promise;
@@ -22,8 +24,14 @@
                     $scope.getCourseList();
                 };
 
+                $scope.getCourses = function () {
+                    var requestUrl = "/api/course/search";
+
+                    $scope.postRequest(requestUrl, $scope.request);
+                };
+
                 $scope.getCourseList = function () {
-                    var requestUrl = "/api/course/search?source=" + $scope.request.source.toString() +
+                    var requestUrl = "/api/course/search/params?source=" + $scope.request.source.toString() +
                         "&request=" + $scope.request.string + "&size=" + $scope.pageSize;
                     $scope.pageSize = $scope.pageSize + 5;
 
@@ -95,6 +103,17 @@
                 // http
                 $scope.getRequest = function (url) {
                     return $http.get(url)
+                        .then(function (callback) {
+                            callback.isError = false;
+                            return callback;
+                        }, function (callback) {
+                            callback.isError = true;
+                            return callback;
+                        });
+                };
+
+                $scope.postRequest = function (url, body) {
+                    return $http.post(url, body)
                         .then(function (callback) {
                             callback.isError = false;
                             return callback;

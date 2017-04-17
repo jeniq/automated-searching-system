@@ -2,6 +2,7 @@ package com.hryshchenko.model.dto;
 
 import com.hryshchenko.model.entity.Category;
 import com.hryshchenko.model.entity.Course;
+import com.hryshchenko.model.entity.Language;
 import com.hryshchenko.model.entity.Source;
 
 import java.sql.Timestamp;
@@ -17,6 +18,7 @@ public class CourseDTO {
     private String pictureUrl;
     private String courseSourceId;
     private String courseLink;
+    private Language language;
 
     public Course toCourse() {
         Course course = new Course();
@@ -34,6 +36,9 @@ public class CourseDTO {
         }
         if (this.source != null) {
             course.setSource(this.source);
+        }
+        if (this.language != null) {
+            course.setLanguage(this.language);
         }
 
         return course;
@@ -117,5 +122,13 @@ public class CourseDTO {
 
     public void setCourseLink(String courseLink) {
         this.courseLink = courseLink;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 }

@@ -1,6 +1,6 @@
 package com.hryshchenko.controller;
 
-import com.hryshchenko.model.dto.CategoryDTO;
+import com.hryshchenko.model.dto.SearchDTO;
 import com.hryshchenko.service.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class CourseController {
     }
 
     @GetMapping(value = "/{id}", produces = JSON_MEDIA_TYPE)
-    public ResponseEntity<?> getCourse(@PathVariable Long id){
+    public ResponseEntity<?> getCourse(@PathVariable Long id) {
         return ResponseEntity.ok(courseService.getCourse(id));
     }
 
@@ -28,14 +28,18 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getAllCourses(pageSize));
     }
 
-    @GetMapping(value = "/category", produces = JSON_MEDIA_TYPE)
-    public ResponseEntity<?> getCoursesByCategory(@RequestBody CategoryDTO categoryDTO) {
-       // return ResponseEntity.ok(courseService.getAllCourses());
-        return null;
+    @Deprecated // Due to extending number parameters was decided to refactor using DTO
+    @GetMapping(value = "/search/params", produces = JSON_MEDIA_TYPE)
+    public ResponseEntity<?> searchCourse(@RequestParam String request,
+                                          @RequestParam String source,
+                                          @RequestParam(name = "size") Integer pageSize) {
+        return ResponseEntity.ok(courseService.search(request, source, pageSize));
     }
 
-    @GetMapping(value = "/search", produces = JSON_MEDIA_TYPE)
-    public ResponseEntity<?> searchCourse(@RequestParam String request, @RequestParam String source, @RequestParam(name = "size") Integer pageSize) {
-        return ResponseEntity.ok(courseService.search(request, source, pageSize));
+    // Use POST because in this method we also write data to the database
+    @PostMapping(value = "/search", produces = JSON_MEDIA_TYPE)
+    public ResponseEntity<?> searchCourse(@RequestBody SearchDTO searchDTO,
+                                          @RequestParam(name = "size") Integer pageSize) {
+        return ResponseEntity.ok(courseService.search(searchDTO, pageSize));
     }
 }

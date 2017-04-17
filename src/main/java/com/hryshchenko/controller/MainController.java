@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-    @GetMapping(value = {"/*"}, produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(value = "/*", produces = MediaType.TEXT_HTML_VALUE)
     public String index() {
         return "/static/index.html";
     }

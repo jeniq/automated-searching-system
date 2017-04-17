@@ -2,6 +2,7 @@ package com.hryshchenko.service.search;
 
 import com.hryshchenko.model.entity.Source;
 import com.hryshchenko.repository.course.CourseRepository;
+import com.hryshchenko.repository.language.LanguageRepository;
 import com.hryshchenko.service.sourceAPI.CourseraAPI;
 import com.hryshchenko.service.sourceAPI.EdxAPI;
 import com.hryshchenko.service.sourceAPI.Searchable;
@@ -28,11 +29,13 @@ public class SearchService {
     private EdxAPI edxAPI;
     private TedAPI tedAPI;
     private CourseRepository courseRepository;
+    private LanguageRepository languageRepository;
 
     @Autowired
     public SearchService(JSONCourseraParser jsonCourseraParser, JSONEdxParser jsonEdxParser, JSONTedParser jsonTedParser,
                          CourseraAPI courseraAPI, EdxAPI edxAPI, TedAPI tedAPI,
-                         CourseRepository courseRepository) {
+                         CourseRepository courseRepository,
+                         LanguageRepository languageRepository) {
         this.jsonCourseraParser = jsonCourseraParser;
         this.jsonEdxParser = jsonEdxParser;
         this.jsonTedParser = jsonTedParser;
@@ -40,6 +43,7 @@ public class SearchService {
         this.edxAPI = edxAPI;
         this.tedAPI = tedAPI;
         this.courseRepository = courseRepository;
+        this.languageRepository = languageRepository;
     }
 
     // This method adds to cache search result

@@ -3,17 +3,20 @@
         <div class="row content">
 
             <nav-bar></nav-bar>
-
             <div class="col-sm-2 sidenav">
                 <h4>Джерело</h4>
+                <ul class="nav nav-pills nav-stacked">
+                    <li><input type="checkbox" ng-model="request.source[0]" ng-click="checkSourcesSelected(0)"
+                               ng-true-value="0"
+                               ng-false-value="null" ng-checked="true">Всі</li>
+                </ul>
                 <ul class="nav nav-pills nav-stacked" ng-repeat="source in sourceList">
-                    <li><input type="checkbox" ng-model="request.source[$index]" ng-true-value="{{source.id}}"
+                    <li><input type="checkbox" ng-click="checkSourcesSelected($index+1)" ng-model="request.source[$index+1]" ng-true-value="{{source.id}}"
                                ng-false-value="null">{{ source.name }}
                     </li>
                 </ul>
-                <br>
-                <h4>Категорія</h4>
-                <ul class="nav nav-pills nav-stacked">
+                <h4 ng-hide="true">Категорія</h4>
+                <ul class="nav nav-pills nav-stacked" ng-hide="true">
                     <li><input type="checkbox" ng-model="request.category[0]" ng-true-value="1"
                                ng-false-value="null">Технічні науки</li>
                     <li><input type="checkbox" ng-model="request.category[1]" ng-true-value="2"
@@ -28,13 +31,16 @@
                 <br>
                 <h4>Мова</h4>
                 <ul class="nav nav-pills nav-stacked">
-                    <li><input type="checkbox" type="checkbox" ng-model="request.language[0]" ng-true-value="1"
+                    <li><input type="checkbox" ng-model="request.language[0]" ng-click="checkLanguageSelected(0)"
+                               ng-true-value="0"
+                               ng-false-value="null" ng-checked="true">Всі</li>
+                    <li><input type="checkbox" type="checkbox" ng-click="checkLanguageSelected(1)" ng-model="request.language[1]" ng-true-value="1"
                                ng-false-value="null">Українська</li>
-                    <li><input type="checkbox" ng-model="request.language[1]" ng-true-value="2"
+                    <li><input type="checkbox" ng-click="checkLanguageSelected(2)" ng-model="request.language[2]" ng-true-value="2"
                                ng-false-value="null">Англійська</li>
-                    <li><input type="checkbox" ng-model="request.language[2]" ng-true-value="3"
+                    <li><input type="checkbox" ng-click="checkLanguageSelected(3)" ng-model="request.language[3]" ng-true-value="3"
                                ng-false-value="null">Російська</li>
-                    <li><input type="checkbox" ng-model="request.language[3]" ng-true-value="4"
+                    <li><input type="checkbox" ng-click="checkLanguageSelected(4)" ng-model="request.language[4]" ng-true-value="4"
                                ng-false-value="null">Інші</li>
                 </ul>
             </div>
@@ -42,8 +48,7 @@
                 <form role="form" id="searchBar">
                     <div class="input-group">
                         <input type="text" class="form-control input-sm" ng-model="request.string"
-                               title="Виконайте пошук необхідного курсу за ключовими словами. Якщо необхідно знайти за фразою - візьміть її в лапки."
-                               required>
+                               title="Виконайте пошук необхідного курсу за ключовими словами. Якщо необхідно знайти за фразою - візьміть її в лапки.">
               <span class="input-group-btn">
                 <button class="btn btn-default btn-sm" ng-click="getCourses()">
                     <span class="glyphicon glyphicon-search"></span>

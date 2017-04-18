@@ -11,9 +11,9 @@
                 $scope.sourceList = [];
                 $scope.request = {
                     string: "",
-                    source: [],
+                    source: [0],
                     category: [],
-                    language: []
+                    language: [0]
                 };
                 $scope.courseList = [];
                 $scope.promise;
@@ -22,6 +22,22 @@
                     $scope.pageSize = 5;
                     $scope.showPaginationButton = true;
                     $scope.getCourseList();
+                };
+
+                $scope.checkSourcesSelected = function (id) {
+                    if (id == 0){
+                        $scope.request.source = [0];
+                    }else{
+                        $scope.request.source[0] = null;
+                    }
+                };
+
+                $scope.checkLanguageSelected = function (id) {
+                    if (id == 0){
+                        $scope.request.language = [0];
+                    }else{
+                        $scope.request.language[0] = null;
+                    }
                 };
 
                 $scope.getCourses = function () {

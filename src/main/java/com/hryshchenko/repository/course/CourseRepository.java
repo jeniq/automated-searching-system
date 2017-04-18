@@ -81,25 +81,25 @@ public class CourseRepository {
                 .list();
     }
 
-    public List getCourses(SearchDTO searchDTO) {
+    @SuppressWarnings("unchecked")
+    @Transactional
+    public List<Course> getCourses(SearchDTO searchDTO, Integer pageSize) {
         Criteria criteria = getSession().createCriteria(Course.class);
 
         criteria.add(Restrictions.ilike("name", searchDTO.getRequest(), MatchMode.ANYWHERE))
                 .addOrder(Order.desc("id"));
 
-        if (searchDTO.getSources() != null) {
-            criteria.add(Restrictions.in("source", searchDTO.getSources()));
+        if (searchDTO.getSources() != null && searchDTO.getSources().size() > 0) {
+            criteria.add(Restrictions.in("source.id", searchDTO.getSources()));
         }
-        if (searchDTO.getLanguages() != null) {
-            criteria.add(Restrictions.in("language", searchDTO.getLanguages()));
+        if (searchDTO.getLanguages() != null && searchDTO.getLanguages().size() > 0) {
+            criteria.add(Restrictions.in("language.id", searchDTO.getLanguages()));
         }
-        if (searchDTO.getCategories() != null) {
-            criteria.add(Restrictions.in("category", searchDTO.getCategories()));
-        }
-        if (searchDTO.getPageSize() != null) {
-            criteria.setFirstResult(0).setMaxResults(searchDTO.getPageSize());
+        if (searchDTO.getCategories() != null && searchDTO.getCategories().size() > 0) {
+            criteria.add(Restrictions.in("category.id", searchDTO.getCategories()));
         }
 
+        criteria.setFirstResult(0).setMaxResults(pageSize);
         return criteria.list();
     }
 

@@ -20,6 +20,13 @@ public class SourceRepository {
     }
 
     @Transactional
+    public Source getById(long id) {
+        return (Source) getSession().createQuery("FROM Source WHERE id = :id")
+                .setParameter("id", id)
+                .uniqueResult();
+    }
+
+    @Transactional
     public List<Source> getAll() {
         return getSession().createQuery("from Source order by id").list();
     }

@@ -23,7 +23,7 @@ public class LanguageRepository {
 
     @Transactional
     public Language getById(long id) {
-        return (Language) getSession().createQuery("FROM Course WHERE id = :id")
+        return (Language) getSession().createQuery("FROM Language WHERE id = :id")
                 .setParameter("id", id)
                 .uniqueResult();
     }

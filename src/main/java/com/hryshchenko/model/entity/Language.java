@@ -1,5 +1,7 @@
 package com.hryshchenko.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ public class Language {
     private String language;
     @Column(name = "abbreviate_form")
     private String abbr;
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "language")
     private Set<Course> courses;
 

@@ -25,9 +25,12 @@
                 };
 
                 $scope.getCourses = function () {
-                    var requestUrl = "/api/course/search";
+                    var requestUrl = "/api/course/search?size=" + $scope.pageSize;
 
-                    $scope.postRequest(requestUrl, $scope.request);
+                    $scope.promise = $scope.postRequest(requestUrl, $scope.request).then(function (response) {
+                        $scope.courseList = response.data;
+                    }, function errorCallback(response) {
+                    });
                 };
 
                 $scope.getCourseList = function () {

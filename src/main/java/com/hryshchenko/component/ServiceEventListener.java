@@ -1,5 +1,6 @@
 package com.hryshchenko.component;
 
+import com.hryshchenko.model.dto.SearchDTO;
 import com.hryshchenko.model.event.SearchRequest;
 import com.hryshchenko.service.search.SearchService;
 import org.springframework.context.event.EventListener;
@@ -17,6 +18,11 @@ public class ServiceEventListener {
     @EventListener
     public void handleSearchRequest(SearchRequest searchRequest) {
         searchService.search(searchRequest.getValue(), searchRequest.getSource());
+    }
+
+    @EventListener
+    public void handleSearchRequest(SearchDTO searchDTO) {
+        searchService.search(searchDTO);
     }
 
 }

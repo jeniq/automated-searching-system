@@ -8,25 +8,34 @@
                 <h4>Джерело</h4>
                 <ul class="nav nav-pills nav-stacked" ng-repeat="source in sourceList">
                     <li><input type="checkbox" ng-model="request.source[$index]" ng-true-value="{{source.id}}"
-                               ng-false-value="0">{{ source.name }}
+                               ng-false-value="null">{{ source.name }}
                     </li>
                 </ul>
                 <br>
                 <h4>Категорія</h4>
                 <ul class="nav nav-pills nav-stacked">
-                    <li><input type="checkbox" value="1">Технічні науки</li>
-                    <li><input type="checkbox" value="2">Гуманітарні науки</li>
-                    <li><input type="checkbox" value="3">Комп'ютерні науки</li>
-                    <li><input type="checkbox" value="3">Вивчення мов</li>
-                    <li><input type="checkbox" value="3">Бізнес</li>
+                    <li><input type="checkbox" ng-model="request.category[0]" ng-true-value="1"
+                               ng-false-value="null">Технічні науки</li>
+                    <li><input type="checkbox" ng-model="request.category[1]" ng-true-value="2"
+                               ng-false-value="null">Гуманітарні науки</li>
+                    <li><input type="checkbox" ng-model="request.category[2]" ng-true-value="3"
+                               ng-false-value="null">Комп'ютерні науки</li>
+                    <li><input type="checkbox" ng-model="request.category[3]" ng-true-value="4"
+                               ng-false-value="null">Вивчення мов</li>
+                    <li><input type="checkbox" ng-model="request.category[4]" ng-true-value="5"
+                               ng-false-value="null">Бізнес</li>
                 </ul>
                 <br>
                 <h4>Мова</h4>
                 <ul class="nav nav-pills nav-stacked">
-                    <li><input type="checkbox" value="1">Українська</li>
-                    <li><input type="checkbox" value="2">Англійська</li>
-                    <li><input type="checkbox" value="3">Російська</li>
-                    <li><input type="checkbox" value="3">Інші</li>
+                    <li><input type="checkbox" type="checkbox" ng-model="request.language[0]" ng-true-value="1"
+                               ng-false-value="null">Українська</li>
+                    <li><input type="checkbox" ng-model="request.language[1]" ng-true-value="2"
+                               ng-false-value="null">Англійська</li>
+                    <li><input type="checkbox" ng-model="request.language[2]" ng-true-value="3"
+                               ng-false-value="null">Російська</li>
+                    <li><input type="checkbox" ng-model="request.language[3]" ng-true-value="4"
+                               ng-false-value="null">Інші</li>
                 </ul>
             </div>
             <div class="col-sm-9 mainContent">

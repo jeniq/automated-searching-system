@@ -1,8 +1,10 @@
 package com.hryshchenko.service.search;
 
+import com.hryshchenko.model.dto.SearchDTO;
 import com.hryshchenko.model.entity.Source;
 import com.hryshchenko.repository.course.CourseRepository;
 import com.hryshchenko.repository.language.LanguageRepository;
+import com.hryshchenko.repository.source.SourceRepository;
 import com.hryshchenko.service.sourceAPI.CourseraAPI;
 import com.hryshchenko.service.sourceAPI.EdxAPI;
 import com.hryshchenko.service.sourceAPI.Searchable;
@@ -30,12 +32,16 @@ public class SearchService {
     private TedAPI tedAPI;
     private CourseRepository courseRepository;
     private LanguageRepository languageRepository;
+    private SourceRepository sourceRepository;
+    private Searchable sourceAPI;
+    private Parsable parser;
 
     @Autowired
     public SearchService(JSONCourseraParser jsonCourseraParser, JSONEdxParser jsonEdxParser, JSONTedParser jsonTedParser,
                          CourseraAPI courseraAPI, EdxAPI edxAPI, TedAPI tedAPI,
                          CourseRepository courseRepository,
-                         LanguageRepository languageRepository) {
+                         LanguageRepository languageRepository,
+                         SourceRepository sourceRepository) {
         this.jsonCourseraParser = jsonCourseraParser;
         this.jsonEdxParser = jsonEdxParser;
         this.jsonTedParser = jsonTedParser;
@@ -44,6 +50,7 @@ public class SearchService {
         this.tedAPI = tedAPI;
         this.courseRepository = courseRepository;
         this.languageRepository = languageRepository;
+        this.sourceRepository = sourceRepository;
     }
 
     // This method adds to cache search result
@@ -85,14 +92,43 @@ public class SearchService {
         }
     }
 
+    @Async
+    public void search(SearchDTO searchDTO) {
+        for (Long source : searchDTO.getSources()) {
+            selectResource(source);
+
+            for (String request : searchDTO.getRequest().split(" ")) {
+                Optional<JSONObject> jsonObject = Optional.ofNullable(sourceAPI.find(request));
+                if (jsonObject.isPresent()) { // Avoid repeating courses in database
+                    courseRepository.saveAll(parser.parseCourseJSON(jsonObject.get())
+                            .stream()
+                            .filter(c -> c != null)
+                            .filter(c -> c.getName().length() > 5)
+                            .filter(c -> courseRepository.getCourseBySourceId(c.getCourseSourceId()) == null)
+                            .peek(c -> c.setSource(sourceRepository.getById(source)))
+                            .collect(Collectors.toList())
+                    );
+                }
+            }
+        }
+    }
+
     private Searchable selectResource(Long resourceId) {
         switch (resourceId.toString()) {
             case "1": // Coursera
+                sourceAPI = courseraAPI;
+                parser = jsonCourseraParser;
                 return courseraAPI;
             case "2": // edX
+                sourceAPI = edxAPI;
+                parser = jsonEdxParser;
                 return edxAPI;
-            default:
+            case "3":
+                sourceAPI = tedAPI;
+                parser = jsonTedParser;
                 return tedAPI;
+            default:
+                throw new RuntimeException("Source not defined");
         }
     }
 

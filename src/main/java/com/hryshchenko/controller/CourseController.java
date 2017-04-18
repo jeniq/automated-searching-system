@@ -40,6 +40,6 @@ public class CourseController {
     @PostMapping(value = "/search", produces = JSON_MEDIA_TYPE)
     public ResponseEntity<?> searchCourse(@RequestBody SearchDTO searchDTO,
                                           @RequestParam(name = "size") Integer pageSize) {
-        return ResponseEntity.ok(courseService.search(searchDTO, pageSize));
+        return ResponseEntity.ok(courseService.getCourses(searchDTO, pageSize));
     }
 }

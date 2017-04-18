@@ -69,7 +69,10 @@ public class CourseService {
         return courses;
     }
 
-    public List<Course> search(SearchDTO searchDTO, Integer pageSize) {
-        return null;
+    public List<Course> getCourses(SearchDTO searchDTO, Integer pageSize) {
+        // Activate search at original sources in new threads
+        eventPublisher.publishEvent(searchDTO);
+
+        return courseRepository.getCourses(searchDTO, pageSize);
     }
 }

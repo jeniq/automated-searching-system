@@ -1,5 +1,7 @@
 package com.hryshchenko.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -32,6 +34,7 @@ public class Course {
     private String courseSourceId;
     @Column(name = "course_link")
     private String courseLink;
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "language_id")
     private Language language;

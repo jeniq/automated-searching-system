@@ -1,5 +1,6 @@
 package com.hryshchenko.service.sourceAPI;
 
+import com.hryshchenko.model.dto.SearchDTO;
 import com.hryshchenko.util.URLexecutor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class EdxAPI implements Searchable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    @Override
+    public JSONObject find(SearchDTO request) {
         return null;
     }
 

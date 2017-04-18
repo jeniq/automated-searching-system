@@ -11,9 +11,9 @@
                 $scope.sourceList = [];
                 $scope.request = {
                     string: "",
-                    source: [0],
+                    source: [],
                     category: [],
-                    language: [0]
+                    language: []
                 };
                 $scope.courseList = [];
                 $scope.promise;
@@ -25,28 +25,36 @@
                 };
 
                 $scope.checkSourcesSelected = function (id) {
-                    if (id == 0){
-                        $scope.request.source = [0];
-                    }else{
+                    if (id == 0) {
+                        $scope.request.source = [];
+                    } else {
                         $scope.request.source[0] = null;
                     }
                 };
 
                 $scope.checkLanguageSelected = function (id) {
-                    if (id == 0){
-                        $scope.request.language = [0];
-                    }else{
+                    if (id == 0) {
+                        $scope.request.language = [];
+                    } else {
                         $scope.request.language[0] = null;
                     }
                 };
 
                 $scope.getCourses = function () {
                     var requestUrl = "/api/course/search?size=" + $scope.pageSize;
+                    var requestAllUrl = "/api/course/all?size=" + $scope.pageSize;
 
-                    $scope.promise = $scope.postRequest(requestUrl, $scope.request).then(function (response) {
-                        $scope.courseList = response.data;
-                    }, function errorCallback(response) {
-                    });
+                    if ($scope.request.source[0] == 0) {
+                        $scope.promise = $scope.postRequest(requestAllUrl, $scope.request).then(function (response) {
+                            $scope.courseList = response.data;
+                        }, function errorCallback(response) {
+                        });
+                    } else {
+                        $scope.promise = $scope.postRequest(requestUrl, $scope.request).then(function (response) {
+                            $scope.courseList = response.data;
+                        }, function errorCallback(response) {
+                        });
+                    }
                 };
 
                 $scope.getCourseList = function () {
@@ -122,6 +130,17 @@
                 // http
                 $scope.getRequest = function (url) {
                     return $http.get(url)
+                        .then(function (callback) {
+                            callback.isError = false;
+                            return callback;
+                        }, function (callback) {
+                            callback.isError = true;
+                            return callback;
+                        });
+                };
+
+                $scope.getRequest = function (url, body) {
+                    return $http.get(url, body)
                         .then(function (callback) {
                             callback.isError = false;
                             return callback;

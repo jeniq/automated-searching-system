@@ -7,6 +7,7 @@ import com.hryshchenko.model.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SearchDTO {
@@ -48,7 +49,7 @@ public class SearchDTO {
     }
 
     public void setSources(List<Long> sources) {
-        this.sources = sources;
+        this.sources = sources.stream().filter(s -> s != null).collect(Collectors.toList());
     }
 
     public List<Long> getLanguages() {
@@ -56,7 +57,7 @@ public class SearchDTO {
     }
 
     public void setLanguages(List<Long> languages) {
-        this.languages = languages;
+        this.languages = languages.stream().filter(l -> l != null).collect(Collectors.toList());
     }
 
     public List<Long> getCategories() {

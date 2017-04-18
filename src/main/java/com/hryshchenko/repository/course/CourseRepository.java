@@ -90,10 +90,10 @@ public class CourseRepository {
                 .addOrder(Order.desc("id"));
 
         if (searchDTO.getSources() != null && searchDTO.getSources().size() > 0) {
-            criteria.add(Restrictions.in("source.id", searchDTO.getSources()));
+                criteria.add(Restrictions.in("source.id", searchDTO.getSources()));
         }
         if (searchDTO.getLanguages() != null && searchDTO.getLanguages().size() > 0) {
-            criteria.add(Restrictions.in("language.id", searchDTO.getLanguages()));
+                criteria.add(Restrictions.in("language.id", searchDTO.getLanguages()));
         }
         if (searchDTO.getCategories() != null && searchDTO.getCategories().size() > 0) {
             criteria.add(Restrictions.in("category.id", searchDTO.getCategories()));

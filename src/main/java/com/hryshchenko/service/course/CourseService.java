@@ -3,28 +3,30 @@ package com.hryshchenko.service.course;
 
 import com.hryshchenko.model.dto.SearchDTO;
 import com.hryshchenko.model.entity.Course;
-import com.hryshchenko.model.event.SearchRequest;
 import com.hryshchenko.repository.course.CourseRepository;
+import com.hryshchenko.service.search.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-
-import static com.hryshchenko.service.search.SearchService.SPACE;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @Service
 public class CourseService {
 
     private CourseRepository courseRepository;
-    private ApplicationEventPublisher eventPublisher;
+    private SearchService searchService;
 
     @Autowired
     public CourseService(CourseRepository courseRepository,
-                         ApplicationEventPublisher eventPublisher) {
+                         ApplicationEventPublisher eventPublisher,
+                         SearchService searchService) {
         this.courseRepository = courseRepository;
-        this.eventPublisher = eventPublisher;
+        this.searchService = searchService;
     }
 
     public Course getCourse(Long id) {
@@ -35,44 +37,41 @@ public class CourseService {
         return courseRepository.getAll(pageSize);
     }
 
-    public List<Course> search(String request, String resource, Integer pageSize) {
-        List<Course> courses = new ArrayList<>();
-
-        // Activate search at original sources in new threads
-        eventPublisher.publishEvent(new SearchRequest(request, resource));
-
-        // Find cached results in database
-        // TODO fix repeat code in search service
-        String values[];
-        if (request.startsWith("\"") & request.endsWith("\"")) {
-            values = new String[]{request}; // Search by full request string
-        } else {
-            values = request.split(SPACE); // Search by separate word
-        }
-
-        String[] sources = resource.split(",");
-
-        if (sources.length == 1) { // Interrupt search without selected source
-            return courseRepository.getAll(pageSize);
-        }
-        // TODO fix when no one source selected, nothing returns
-        for (String s : sources) {
-            if (s.equals("") || s.equals(",")) {
-                continue;
-            }
-            for (String value : values) {
-                courses.addAll(
-                        courseRepository.getCoursesByNameAndSource(new SearchDTO(Long.valueOf(s), value), pageSize));
-            }
-        }
-
-        return courses;
+    // TODO
+    public List<Course> getAllCourses(SearchDTO searchDTO, Integer pageSize) {
+        return null;
     }
 
+    /**
+     * This method gets courses. First, it starts checking out request in original sources
+     * that selected by user at UI. It starts new thread for each source. In the same time,
+     * it makes search at database. In case nothing found in database it waits for results
+     * from original sources.
+     *
+     * @param searchDTO object with all necessary information for success searching.
+     * @param pageSize  size of returning list.
+     * @return list of courses founded at database
+     */
+    // TODO request in quotes
     public List<Course> getCourses(SearchDTO searchDTO, Integer pageSize) {
-        // Activate search at original sources in new threads
-        eventPublisher.publishEvent(searchDTO);
+        Collection<Future<Boolean>> search = new ArrayList<>();
 
-        return courseRepository.getCourses(searchDTO, pageSize);
+        // New thread for each source
+        search.add(searchService.search(searchDTO));
+
+        List<Course> result = courseRepository.getCourses(searchDTO, pageSize);
+
+        if (result.size() == 0) {
+            search.forEach(done -> {
+                try {
+                    done.get(); // Wait for all threads
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            });
+            result = courseRepository.getCourses(searchDTO, pageSize);
+        }
+
+        return result;
     }
 }

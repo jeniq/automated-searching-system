@@ -14,7 +14,7 @@ import java.io.IOException;
 @Component
 public class HTMLtedParser {
 
-    public JSONObject parseHtml(String url){
+    public JSONObject parseHtml(String url) {
         JSONObject jsonObject = new JSONObject();
         JSONArray array = new JSONArray();
         Document html;
@@ -28,7 +28,7 @@ public class HTMLtedParser {
 
         Elements articles = html.select("article");
 
-        for (Element element : articles){
+        for (Element element : articles) {
             JSONObject item = new JSONObject();
             item.put("title",
                     element.select("a").first().text());

@@ -35,14 +35,6 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getAllCourses(searchDTO, pageSize));
     }
 
-    @Deprecated // Due to extending number parameters was decided to refactor using DTO
-    @GetMapping(value = "/search/params", produces = JSON_MEDIA_TYPE)
-    public ResponseEntity<?> searchCourse(@RequestParam String request,
-                                          @RequestParam String source,
-                                          @RequestParam(name = "size") Integer pageSize) {
-        return ResponseEntity.ok(courseService.search(request, source, pageSize));
-    }
-
     // Use POST because in this method we also write data to the database
     @PostMapping(value = "/search", produces = JSON_MEDIA_TYPE)
     public ResponseEntity<?> searchCourse(@RequestBody SearchDTO searchDTO,

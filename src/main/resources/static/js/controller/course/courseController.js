@@ -17,6 +17,36 @@
                 };
                 $scope.courseList = [];
                 $scope.promise;
+                $scope.boxesSelected = {source: false, language: false};
+                $scope.notFoundMessage = false;
+                $scope.newAddons = 0;
+
+                $scope.checkForSelection = function () {
+                    $scope.boxesSelected.source = false;
+                    $scope.boxesSelected.language = false;
+
+                    if ($scope.request.source.length == 0) {
+                        $scope.boxesSelected.source = true;
+                    } else {
+                        angular.forEach($scope.request.source, function (value, key) {
+                            if (value != null) {
+                                $scope.boxesSelected.source = true;
+                            }
+                        });
+                    }
+
+                    if ($scope.request.language.length == 0) {
+                        $scope.boxesSelected.language = true;
+                    } else {
+                        angular.forEach($scope.request.language, function (value, key) {
+                            if (value != null) {
+                                $scope.boxesSelected.language = true;
+                            }
+                        });
+                    }
+
+                    return ($scope.boxesSelected.source && $scope.boxesSelected.language);
+                };
 
                 $scope.searchCourseBar = function () {
                     $scope.pageSize = 5;
@@ -44,16 +74,31 @@
                     var requestUrl = "/api/course/search?size=" + $scope.pageSize;
                     var requestAllUrl = "/api/course/all?size=" + $scope.pageSize;
 
-                    if ($scope.request.source[0] == 0) {
-                        $scope.promise = $scope.postRequest(requestAllUrl, $scope.request).then(function (response) {
-                            $scope.courseList = response.data;
-                        }, function errorCallback(response) {
-                        });
+                    if ($scope.checkForSelection()) {
+                        if ($scope.request.source[0] == 0) {
+                            $scope.promise = $scope.postRequest(requestAllUrl, $scope.request).then(function (response) {
+                                $scope.courseList = response.data;
+                                $scope.checkForNonEmptyResult();
+                            }, function errorCallback(response) {
+                            });
+                        } else {
+                            $scope.promise = $scope.postRequest(requestUrl, $scope.request).then(function (response) {
+                                $scope.courseList = response.data;
+                                $scope.checkForNonEmptyResult();
+                            }, function errorCallback(response) {
+                            });
+                        }
                     } else {
-                        $scope.promise = $scope.postRequest(requestUrl, $scope.request).then(function (response) {
-                            $scope.courseList = response.data;
-                        }, function errorCallback(response) {
-                        });
+                        alert("Оберіть, будь ласка, джерело та мову пошуку");
+                    }
+
+                };
+
+                $scope.checkForNonEmptyResult = function () {
+                    if ($scope.courseList.length == 0){
+                        $scope.notFoundMessage = true;
+                    }else{
+                        $scope.notFoundMessage = false;
                     }
                 };
 

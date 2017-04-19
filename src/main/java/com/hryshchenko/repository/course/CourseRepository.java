@@ -11,8 +11,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -42,19 +42,19 @@ public class CourseRepository {
     }
 
     @SuppressWarnings("unchecked")
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Course> getAll(Integer pageSize) {
         return getSession().createQuery("from Course ORDER BY id DESC").setFirstResult(0).setMaxResults(pageSize).list();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Course getCourseBySourceId(String courseSourceId) {
         return (Course) getSession().createQuery("FROM Course WHERE course_source_id = :id")
                 .setParameter("id", courseSourceId)
                 .uniqueResult();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Course getById(long id) {
         return (Course) getSession().createQuery("FROM Course WHERE id = :id")
                 .setParameter("id", id)
@@ -82,24 +82,26 @@ public class CourseRepository {
     }
 
     @SuppressWarnings("unchecked")
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Course> getCourses(SearchDTO searchDTO, Integer pageSize) {
         Criteria criteria = getSession().createCriteria(Course.class);
 
-        criteria.add(Restrictions.ilike("name", searchDTO.getRequest(), MatchMode.ANYWHERE))
-                .addOrder(Order.desc("id"));
+        criteria.add(Restrictions.or(
+                Restrictions.ilike("name", searchDTO.getRequest(), MatchMode.ANYWHERE),
+                Restrictions.ilike("description", searchDTO.getRequest(), MatchMode.ANYWHERE)
+        ));
 
         if (searchDTO.getSources() != null && searchDTO.getSources().size() > 0) {
-                criteria.add(Restrictions.in("source.id", searchDTO.getSources()));
+            criteria.add(Restrictions.in("source.id", searchDTO.getSources()));
         }
         if (searchDTO.getLanguages() != null && searchDTO.getLanguages().size() > 0) {
-                criteria.add(Restrictions.in("language.id", searchDTO.getLanguages()));
+            criteria.add(Restrictions.in("language.id", searchDTO.getLanguages()));
         }
         if (searchDTO.getCategories() != null && searchDTO.getCategories().size() > 0) {
             criteria.add(Restrictions.in("category.id", searchDTO.getCategories()));
         }
 
-        criteria.setFirstResult(0).setMaxResults(pageSize);
+        criteria.setFirstResult(0).setMaxResults(pageSize).addOrder(Order.desc("id"));
         return criteria.list();
     }
 

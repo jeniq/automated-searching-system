@@ -8,40 +8,56 @@
                 <ul class="nav nav-pills nav-stacked">
                     <li><input type="checkbox" ng-model="request.source[0]" ng-click="checkSourcesSelected(0)"
                                ng-true-value=""
-                               ng-false-value="null" ng-checked="true">Всі</li>
+                               ng-false-value="null" ng-checked="true">Всі
+                    </li>
                 </ul>
                 <ul class="nav nav-pills nav-stacked" ng-repeat="source in sourceList">
-                    <li><input type="checkbox" ng-click="checkSourcesSelected($index+1)" ng-model="request.source[$index+1]" ng-true-value="{{source.id}}"
+                    <li><input type="checkbox" ng-click="checkSourcesSelected($index+1)"
+                               ng-model="request.source[$index+1]" ng-true-value="{{source.id}}"
                                ng-false-value="null">{{ source.name }}
                     </li>
                 </ul>
                 <h4 ng-hide="true">Категорія</h4>
                 <ul class="nav nav-pills nav-stacked" ng-hide="true">
                     <li><input type="checkbox" ng-model="request.category[0]" ng-true-value="1"
-                               ng-false-value="null">Технічні науки</li>
+                               ng-false-value="null">Технічні науки
+                    </li>
                     <li><input type="checkbox" ng-model="request.category[1]" ng-true-value="2"
-                               ng-false-value="null">Гуманітарні науки</li>
+                               ng-false-value="null">Гуманітарні науки
+                    </li>
                     <li><input type="checkbox" ng-model="request.category[2]" ng-true-value="3"
-                               ng-false-value="null">Комп'ютерні науки</li>
+                               ng-false-value="null">Комп'ютерні науки
+                    </li>
                     <li><input type="checkbox" ng-model="request.category[3]" ng-true-value="4"
-                               ng-false-value="null">Вивчення мов</li>
+                               ng-false-value="null">Вивчення мов
+                    </li>
                     <li><input type="checkbox" ng-model="request.category[4]" ng-true-value="5"
-                               ng-false-value="null">Бізнес</li>
+                               ng-false-value="null">Бізнес
+                    </li>
                 </ul>
                 <br>
                 <h4>Мова</h4>
                 <ul class="nav nav-pills nav-stacked">
                     <li><input type="checkbox" ng-model="request.language[0]" ng-click="checkLanguageSelected(0)"
                                ng-true-value=""
-                               ng-false-value="null" ng-checked="true">Всі</li>
-                    <li><input type="checkbox" type="checkbox" ng-click="checkLanguageSelected(1)" ng-model="request.language[1]" ng-true-value="1"
-                               ng-false-value="null">Українська</li>
-                    <li><input type="checkbox" ng-click="checkLanguageSelected(2)" ng-model="request.language[2]" ng-true-value="2"
-                               ng-false-value="null">Англійська</li>
-                    <li><input type="checkbox" ng-click="checkLanguageSelected(3)" ng-model="request.language[3]" ng-true-value="3"
-                               ng-false-value="null">Російська</li>
-                    <li><input type="checkbox" ng-click="checkLanguageSelected(4)" ng-model="request.language[4]" ng-true-value="4"
-                               ng-false-value="null">Інші</li>
+                               ng-false-value="null" ng-checked="true">Всі
+                    </li>
+                    <li><input type="checkbox" type="checkbox" ng-click="checkLanguageSelected(1)"
+                               ng-model="request.language[1]" ng-true-value="1"
+                               ng-false-value="null">Українська
+                    </li>
+                    <li><input type="checkbox" ng-click="checkLanguageSelected(2)" ng-model="request.language[2]"
+                               ng-true-value="2"
+                               ng-false-value="null">Англійська
+                    </li>
+                    <li><input type="checkbox" ng-click="checkLanguageSelected(3)" ng-model="request.language[3]"
+                               ng-true-value="3"
+                               ng-false-value="null">Російська
+                    </li>
+                    <li><input type="checkbox" ng-click="checkLanguageSelected(4)" ng-model="request.language[4]"
+                               ng-true-value="4"
+                               ng-false-value="null">Інші
+                    </li>
                 </ul>
             </div>
             <div class="col-sm-9 mainContent">
@@ -59,12 +75,15 @@
 
                 <div cg-busy="{promise:promise,message:'Зачейкате...',backdrop:true,minDuration:2000}">
                     <hr>
+                    <div ng-show="notFoundMessage"><p>Вибачте, нічого не знайдено, спробуйте пізніше.</p></div>
                     <table class="coursesTable">
                         <tbody id="courseList">
                         <tr ng-repeat="course in courseList" ng-click="openCourseDetails(course.id)">
                             <td><img class="resourceImg" src="{{ course.pictureUrl }}"></td>
                             <td><p class="courseTitle">{{ course.name }}</p>
-                                <p>{{ course.description }}</p></td>
+                                <p>{{ course.description }}</p>
+                                <div class="courseSource">{{ course.source.name }}</div>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

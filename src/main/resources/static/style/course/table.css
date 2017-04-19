@@ -27,21 +27,25 @@
     border-spacing: 0 15px;
 }
 
-.courseTitle{
+.courseTitle {
     text-align: left;
     font-size: 20px;
 }
 
-.show-more-text:hover{
+.show-more-text:hover {
     text-decoration: underline;
 }
 
-.show-more-text{
+.show-more-text {
     display: inline-block;
     cursor: pointer;
 }
 
-.show-more-wrapper{
+.show-more-wrapper {
     text-align: center;
     margin-bottom: 30px;
+}
+
+div .courseSource {
+    float:right;
 }

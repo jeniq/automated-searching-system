@@ -23,7 +23,6 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getCourse(id));
     }
 
-    @Deprecated
     @GetMapping(value = "/all", produces = JSON_MEDIA_TYPE)
     public ResponseEntity<?> getAllCourses(@RequestParam(name = "size") Integer pageSize) {
         return ResponseEntity.ok(courseService.getAllCourses(pageSize));

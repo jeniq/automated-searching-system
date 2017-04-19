@@ -75,7 +75,7 @@
                     var requestAllUrl = "/api/course/all?size=" + $scope.pageSize;
 
                     if ($scope.checkForSelection()) {
-                        if ($scope.request.source[0] == 0) {
+                        if ($scope.request.source.length == 0) {
                             $scope.promise = $scope.postRequest(requestAllUrl, $scope.request).then(function (response) {
                                 $scope.courseList = response.data;
                                 $scope.checkForNonEmptyResult();

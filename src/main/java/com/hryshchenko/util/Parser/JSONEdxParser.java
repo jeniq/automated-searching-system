@@ -36,6 +36,9 @@ public class JSONEdxParser implements Parsable {
         JSONArray array = object.getJSONObject("objects").getJSONArray("results");
 
         for (int i = 0; i < array.length(); i++) {
+            if (!array.getJSONObject(i).getString("type").equals("verified")) {
+                continue;
+            }
             courseDTO = new CourseDTO();
             courseDTO.setName(array.getJSONObject(i).getString("title"));
             String description = array.getJSONObject(i).getString("short_description");

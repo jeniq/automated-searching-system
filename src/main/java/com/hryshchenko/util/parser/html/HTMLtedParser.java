@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+import static com.hryshchenko.service.sourceAPI.TedAPI.COURSE_LINK;
+
 @Component
 public class HTMLtedParser {
 
@@ -37,9 +39,10 @@ public class HTMLtedParser {
             item.put("source_id",
                     element.select("a").first().attr("href"));
             item.put("link",
-                    element.select("a").first().attr("href"));
+                    COURSE_LINK + element.select("a").first().attr("href"));
             item.put("image",
                     element.select("img.thumb__image").attr("src"));
+            item.put("language", "English");
             array.put(item);
         }
 

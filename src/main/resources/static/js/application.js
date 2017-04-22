@@ -6,6 +6,7 @@
         "ngTouch",
         "ui.bootstrap",
         "cgBusy",
-        "googlechart"
+        "googlechart",
+        "ng-fusioncharts"
     ])
 })();

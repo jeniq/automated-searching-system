@@ -1,54 +1,46 @@
 (function () {
     angular.module("AutomatedSearchingSystem")
-        .controller("ReportController", ["$scope",
-            function ($scope) {
+        .controller("ReportController", ["$scope", "$http",
+            function ($scope, $http) {
 
-                $scope.myChartObject = {};
+                $scope.getTopCourses = function () {
+                    var url = "/api/course/statistic";
 
-                $scope.myChartObject.type = "ColumnChart";
-
-                $scope.myChartObject.data = {
-                    "cols": [
-                        {id: "c", label: "Назва", type: "string"},
-                        {id: "v", label: "Перегляди", type: "number"}
-                    ], "rows": [
-                        {
-                            c: [
-                                {v: "Android development"},
-                                {v: 34}
-                            ]
-                        },
-                        {
-                            c: [
-                                {v: "Java"},
-                                {v: 65}
-                            ]
-                        },
-                        {
-                            c: [
-                                {v: "iOS dev"},
-                                {v: 23}
-                            ]
-                        },
-                        {
-                            c: [
-                                {v: "AngularJS"},
-                                {v: 32},
-                            ]
-                        },
-                        {
-                            c: [
-                                {v: "JavaScript"},
-                                {v: 55},
-                            ]
-                        }
-                    ]
+                    $scope.getRequest(url).then(function (response) {
+                        $scope.myDataSource.data =  response.data;
+                    }, function errorCallback(response) {
+                    });
                 };
 
-                $scope.myChartObject.options = {
-                    'title': 'Топ-5 популярних онлайн-курсів'
+                // http
+                $scope.getRequest = function (url) {
+                    return $http.get(url)
+                        .then(function (callback) {
+                            callback.isError = false;
+                            return callback;
+                        }, function (callback) {
+                            callback.isError = true;
+                            return callback;
+                        });
                 };
 
+                // call
+                $scope.getTopCourses();
+
+                $scope.myDataSource = {
+                    chart: {
+                        caption: "Топ-5 популярних курсів",
+                        yAxisName: "Кількість переглядів",
+                        paletteColors: "#0075c2",
+                        bgColor: "#ffffff",
+                        showXAxisLine: "1",
+                        xAxisLineColor: "#999999",
+                        divlineColor: "#999999",
+                        divLineDashed: "1",
+                        showAlternateHGridColor: "0"
+                    },
+                    data:[]
+                };
             }]);
 })();
 

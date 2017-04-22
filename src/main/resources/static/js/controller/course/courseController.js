@@ -146,6 +146,9 @@
 
 
                 $scope.goToCourseSource = function (requestUrl) {
+                    var url = "/api/course/watched?course=" + $scope.courseDetails.id;
+                    $scope.postRequest(url);
+
                     window.open(requestUrl, '_blank');
                 };
 
@@ -175,6 +178,17 @@
                 // http
                 $scope.getRequest = function (url) {
                     return $http.get(url)
+                        .then(function (callback) {
+                            callback.isError = false;
+                            return callback;
+                        }, function (callback) {
+                            callback.isError = true;
+                            return callback;
+                        });
+                };
+
+                $scope.postRequest = function (url) {
+                    return $http.post(url)
                         .then(function (callback) {
                             callback.isError = false;
                             return callback;

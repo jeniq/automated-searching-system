@@ -38,6 +38,10 @@ public class Course {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "language_id")
     private Language language;
+    @OneToOne(mappedBy = "course")
+    private CourseViews courseViews;
+    private transient double weight;
+
 
     public Course() {
     }
@@ -129,4 +133,13 @@ public class Course {
     public void setLanguage(Language language) {
         this.language = language;
     }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
 }

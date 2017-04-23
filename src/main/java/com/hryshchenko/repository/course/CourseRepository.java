@@ -86,11 +86,12 @@ public class CourseRepository {
     public List<Course> getCourses(SearchDTO searchDTO, Integer pageSize) {
         Criteria criteria = getSession().createCriteria(Course.class);
 
-        criteria.add(Restrictions.or(
-                Restrictions.ilike("name", searchDTO.getRequest(), MatchMode.ANYWHERE),
-                Restrictions.ilike("description", searchDTO.getRequest(), MatchMode.ANYWHERE)
-        ));
-
+        if (!searchDTO.getRequest().isEmpty()){
+            criteria.add(Restrictions.or(
+                    Restrictions.ilike("name", searchDTO.getRequest(), MatchMode.ANYWHERE),
+                    Restrictions.ilike("description", searchDTO.getRequest(), MatchMode.ANYWHERE)
+            ));
+        }
         if (searchDTO.getSources() != null && searchDTO.getSources().size() > 0) {
             criteria.add(Restrictions.in("source.id", searchDTO.getSources()));
         }
@@ -101,7 +102,9 @@ public class CourseRepository {
             criteria.add(Restrictions.in("category.id", searchDTO.getCategories()));
         }
 
-        criteria.setFirstResult(0).setMaxResults(pageSize).addOrder(Order.desc("id"));
+        // Use pagination in service with result array because we need to get all requested
+        // courses and count their weights for order in runtime
+        //criteria.setFirstResult(0).setMaxResults(pageSize).addOrder(Order.desc("id"));
         return criteria.list();
     }
 

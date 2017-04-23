@@ -7,7 +7,6 @@
                 $scope.cachedCourseListSize;
                 $scope.showPaginationButton = true;
                 $scope.courseDetails = {};
-                $scope.status = '  ';
                 $scope.sourceList = [];
                 $scope.request = {
                     string: "",
@@ -16,29 +15,32 @@
                     language: []
                 };
                 $scope.courseList = [];
-                $scope.promise;
+                $scope.promise = [];
                 $scope.boxesSelected = {source: false, language: false};
                 $scope.notFoundMessage = false;
-                $scope.newAddons = 0;
 
+                /**
+                 * This method check that check-buttons are selected
+                 * @returns {boolean}
+                 */
                 $scope.checkForSelection = function () {
                     $scope.boxesSelected.source = false;
                     $scope.boxesSelected.language = false;
 
-                    if ($scope.request.source.length == 0) {
+                    if ($scope.request.source.length == 0) { // In case selected 'all'
                         $scope.boxesSelected.source = true;
                     } else {
-                        angular.forEach($scope.request.source, function (value, key) {
+                        angular.forEach($scope.request.source, function (value) {
                             if (value != null) {
                                 $scope.boxesSelected.source = true;
                             }
                         });
                     }
 
-                    if ($scope.request.language.length == 0) {
+                    if ($scope.request.language.length == 0) { // In case selected 'all'
                         $scope.boxesSelected.language = true;
                     } else {
-                        angular.forEach($scope.request.language, function (value, key) {
+                        angular.forEach($scope.request.language, function (value) {
                             if (value != null) {
                                 $scope.boxesSelected.language = true;
                             }
@@ -48,10 +50,11 @@
                     return ($scope.boxesSelected.source && $scope.boxesSelected.language);
                 };
 
-                $scope.searchCourseBar = function () {
+                $scope.searchCourses = function () {
                     $scope.pageSize = 5;
                     $scope.showPaginationButton = true;
-                    $scope.getCourseList();
+                    $scope.courseList = [];
+                    $scope.getCourses();
                 };
 
                 $scope.checkSourcesSelected = function (id) {
@@ -74,67 +77,45 @@
                     var requestUrl = "/api/course/search?size=" + $scope.pageSize;
                     var requestAllUrl = "/api/course/all?size=" + $scope.pageSize;
 
+                    $scope.notFoundMessage = false;
+                    $scope.pageSize = $scope.pageSize + 5;
+                    $scope.cachedCourseListSize = $scope.courseList.length;
+
                     if ($scope.checkForSelection()) {
                         if ($scope.request.source.length == 0) {
                             $scope.promise = $scope.postRequest(requestAllUrl, $scope.request).then(function (response) {
                                 $scope.courseList = response.data;
                                 $scope.checkForNonEmptyResult();
+                                if ($scope.cachedCourseListSize == $scope.courseList.length) {
+                                    $scope.showPaginationButton = false;
+                                }
                             }, function errorCallback(response) {
                             });
                         } else {
                             $scope.promise = $scope.postRequest(requestUrl, $scope.request).then(function (response) {
                                 $scope.courseList = response.data;
                                 $scope.checkForNonEmptyResult();
+                                if ($scope.cachedCourseListSize == $scope.courseList.length) {
+                                    $scope.showPaginationButton = false;
+                                }
                             }, function errorCallback(response) {
                             });
                         }
                     } else {
                         alert("Оберіть, будь ласка, джерело та мову пошуку");
                     }
-
                 };
 
+                // Show message if no one course found
                 $scope.checkForNonEmptyResult = function () {
-                    if ($scope.courseList.length == 0){
-                        $scope.notFoundMessage = true;
-                    }else{
-                        $scope.notFoundMessage = false;
-                    }
-                };
-
-                $scope.getCourseList = function () {
-                    var requestUrl = "/api/course/search/params?source=" + $scope.request.source.toString() +
-                        "&request=" + $scope.request.string + "&size=" + $scope.pageSize;
-                    $scope.pageSize = $scope.pageSize + 5;
-
-                    $scope.cachedCourseListSize = $scope.courseList.length;
-                    $scope.promise = $scope.getRequest(requestUrl).then(function (response) {
-                        $scope.courseList = response.data;
-
-                        if ($scope.cachedCourseListSize == $scope.courseList.length) {
-                            $scope.showPaginationButton = false;
-                        }
-
-                    }, function errorCallback(response) {
-                    });
-                };
-
-                $scope.getAllCourses = function () {
-                    var requestUrl = "/api/course/all?size=" + $scope.pageSize;
-                    $scope.pageSize = $scope.pageSize + 5;
-
-                    $scope.getRequest(requestUrl).then(function (response) {
-                        $scope.courseList = response.data;
-                    });
+                    $scope.notFoundMessage = $scope.courseList.length == 0;
                 };
 
                 $scope.showCoursesTable = function () {
-                    if ($scope.courseList.length > 0) {
-                        return true;
-                    }
-                    return false;
+                    return $scope.courseList.length > 0;
                 };
 
+                // Sources
                 $scope.getAllSources = function () {
                     var requestUrl = "/api/source/all";
 
@@ -144,12 +125,11 @@
                     });
                 };
 
-
                 $scope.goToCourseSource = function (requestUrl) {
                     var url = "/api/course/watched?course=" + $scope.courseDetails.id;
                     $scope.postRequest(url);
 
-                    window.open(requestUrl, '_blank');
+                    window.open(requestUrl, '_blank'); // Opens in new window
                 };
 
                 $scope.goToCoursesPage = function () {
@@ -222,6 +202,6 @@
 
                 // call
                 $scope.getAllSources();
-                $scope.getAllCourses();
+                $scope.getCourses();
             }]);
 })();

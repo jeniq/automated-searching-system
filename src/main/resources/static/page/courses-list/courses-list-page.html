@@ -66,7 +66,7 @@
                         <input type="text" class="form-control input-sm" ng-model="request.string"
                                title="Виконайте пошук необхідного курсу за ключовими словами. Якщо необхідно знайти за фразою - візьміть її в лапки.">
               <span class="input-group-btn">
-                <button class="btn btn-default btn-sm" ng-click="getCourses()">
+                <button class="btn btn-default btn-sm" ng-click="searchCourses()">
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
               </span>
@@ -88,7 +88,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div ng-click="getCourseList()" class="show-more-wrapper"
+                <div ng-click="getCourses()" class="show-more-wrapper"
                      ng-show="courseList.length > 4 && showPaginationButton">
                     <p class="show-more-text btn btn-default">Показати наступні</p>
                 </div>

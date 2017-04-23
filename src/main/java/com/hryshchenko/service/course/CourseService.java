@@ -59,14 +59,18 @@ public class CourseService {
      */
     // TODO request in quotes
     public List<Course> getCourses(SearchDTO searchDTO, Integer pageSize) {
-        Future<Boolean> search;
+        Future<Boolean> search = null;
 
-        // New thread for each source
-        search = searchService.search(searchDTO);
+        // if request empty than search only in database
+        // otherwise it will try to find all courses
+        if (!searchDTO.getRequest().isEmpty()) {
+            // New thread for each source
+            search = searchService.search(searchDTO);
+        }
 
         List<Course> result = courseRepository.getCourses(searchDTO, pageSize);
 
-        if (result.size() == 0) {
+        if (result.size() == 0 && search != null) {
             try {
                 search.get(); // Wait for all threads
             } catch (InterruptedException | ExecutionException e) {
@@ -75,7 +79,8 @@ public class CourseService {
             result = courseRepository.getCourses(searchDTO, pageSize);
         }
 
-        return new Weight().define(result, searchDTO); // Define and sort weight for each course in result set
+
+        return new Weight().define(result, searchDTO).subList(0, confirmResultSize(pageSize, result)); // Define and sort weight for each course in result set
     }
 
     public void appendView(Long courseId) {
@@ -89,6 +94,9 @@ public class CourseService {
                     1L // First view
             ));
         }
+    }
 
+    private Integer confirmResultSize(Integer pageSize, List array){
+        return pageSize > array.size() ? array.size() : pageSize;
     }
 }

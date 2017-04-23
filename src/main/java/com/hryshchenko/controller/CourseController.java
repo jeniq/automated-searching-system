@@ -29,6 +29,7 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getCourse(id));
     }
 
+    @Deprecated
     @GetMapping(value = "/all", produces = JSON_MEDIA_TYPE)
     public ResponseEntity<?> getAllCourses(@RequestParam(name = "size") Integer pageSize) {
         return ResponseEntity.ok(courseService.getAllCourses(pageSize));
@@ -47,16 +48,14 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getCourses(searchDTO, pageSize));
     }
 
-    @PostMapping(value="/watched", produces = JSON_MEDIA_TYPE)
-    public ResponseEntity<?> appendNewView(
-            @RequestParam(name = "course") Long courseId
-            ){
+    @PostMapping(value = "/watched", produces = JSON_MEDIA_TYPE)
+    public ResponseEntity<?> appendNewView(@RequestParam(name = "course") Long courseId) {
         courseService.appendView(courseId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping(value = "/statistic", produces = JSON_MEDIA_TYPE)
-    public ResponseEntity<?> getStatistic(){
+    public ResponseEntity<?> getStatistic() {
         return ResponseEntity.ok(courseViewsService.getTopCourses());
     }
 }

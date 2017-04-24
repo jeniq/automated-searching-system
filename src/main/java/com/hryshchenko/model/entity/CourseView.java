@@ -3,35 +3,36 @@ package com.hryshchenko.model.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "course_views")
-public class CourseViews {
+@Table(name = "course_view")
+public class CourseView {
 
     @Id
-    @Column(name = "course_views_id")
+    @Column(name = "course_view_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_view_seq_gen")
-    @SequenceGenerator(name = "course_view_seq_gen", sequenceName = "course_views_course_views_id_seq")
+    @SequenceGenerator(name = "course_view_seq_gen", sequenceName = "course_view_course_view_id_seq",
+            initialValue = 1, allocationSize = 1)
     private Long id;
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="course_id")
+    @JoinColumn(name = "course_id")
     private Course course;
-    @Column
+    @Column(name = "view")
     private Long views;
 
-    public CourseViews() {
+    public CourseView() {
     }
 
-    public CourseViews(Course course, Long views) {
+    public CourseView(Course course, Long views) {
         this.course = course;
         this.views = views;
     }
 
-   /* public Long getId() {
+    public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }*/
+    }
 
     public Course getCourse() {
         return course;

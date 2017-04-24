@@ -1,6 +1,6 @@
 package com.hryshchenko.repository.course;
 
-import com.hryshchenko.model.entity.CourseViews;
+import com.hryshchenko.model.entity.CourseView;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,26 +20,26 @@ public class CourseViewsRepository {
     }
 
     @Transactional
-    public void save(CourseViews courseViews) {
-        getSession().save(courseViews);
+    public void save(CourseView courseView) {
+        getSession().save(courseView);
     }
 
     @Transactional
-    public void update(CourseViews courseViews) {
-        getSession().update(courseViews);
+    public void update(CourseView courseView) {
+        getSession().update(courseView);
     }
 
     @Transactional(readOnly = true)
-    public CourseViews getByCourse(long id) {
-        return (CourseViews) getSession().createQuery("FROM CourseViews WHERE course.id = :courseId")
+    public CourseView getByCourse(long id) {
+        return (CourseView) getSession().createQuery("FROM CourseView WHERE course.id = :courseId")
                 .setParameter("courseId", id)
                 .uniqueResult();
     }
 
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-    public List<CourseViews> getTopCourses() {
-        return getSession().createQuery("FROM CourseViews ORDER BY views DESC")
+    public List<CourseView> getTopCourses() {
+        return getSession().createQuery("FROM CourseView ORDER BY views DESC")
                 .setFirstResult(0)
                 .setMaxResults(5)
                 .list();

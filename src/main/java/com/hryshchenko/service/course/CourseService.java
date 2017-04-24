@@ -3,7 +3,7 @@ package com.hryshchenko.service.course;
 
 import com.hryshchenko.model.dto.SearchDTO;
 import com.hryshchenko.model.entity.Course;
-import com.hryshchenko.model.entity.CourseViews;
+import com.hryshchenko.model.entity.CourseView;
 import com.hryshchenko.repository.course.CourseRepository;
 import com.hryshchenko.repository.course.CourseViewsRepository;
 import com.hryshchenko.repository.source.SourceRepository;
@@ -84,12 +84,12 @@ public class CourseService {
     }
 
     public void appendView(Long courseId) {
-        CourseViews courseViews = courseViewsRepository.getByCourse(courseId);
-        if (courseViews != null) {
-            courseViews.setViews(courseViews.getViews() + 1);
-            courseViewsRepository.update(courseViews);
+        CourseView courseView = courseViewsRepository.getByCourse(courseId);
+        if (courseView != null) {
+            courseView.setViews(courseView.getViews() + 1);
+            courseViewsRepository.update(courseView);
         } else {
-            courseViewsRepository.save(new CourseViews(
+            courseViewsRepository.save(new CourseView(
                     courseRepository.getById(courseId),
                     1L // First view
             ));

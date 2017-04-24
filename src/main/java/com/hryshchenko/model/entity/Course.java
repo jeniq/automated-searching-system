@@ -39,7 +39,7 @@ public class Course {
     @JoinColumn(name = "language_id")
     private Language language;
     @OneToOne(mappedBy = "course")
-    private CourseViews courseViews;
+    private CourseView courseView;
     private transient double weight;
 
 

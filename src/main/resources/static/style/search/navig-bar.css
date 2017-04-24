@@ -15,7 +15,24 @@
     color: rgba(38, 134, 255, 0.8) !important;
 }
 
-.navbar a{
+.navbar a {
     margin-top: 3px;
     font-size: 16px;
+}
+
+#languageBar {
+    float: right;
+}
+
+#languageBar label {
+    font-size: 12px !important;
+    cursor: pointer;
+}
+
+#languageBar label:hover {
+    color: rgba(38, 134, 255, 0.8) !important;
+}
+
+#languageBar .selected {
+    color: rgba(38, 134, 255, 0.8) !important;
 }

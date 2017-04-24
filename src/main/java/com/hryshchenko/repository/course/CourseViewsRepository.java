@@ -3,6 +3,7 @@ package com.hryshchenko.repository.course;
 import com.hryshchenko.model.entity.CourseView;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,5 +44,12 @@ public class CourseViewsRepository {
                 .setFirstResult(0)
                 .setMaxResults(5)
                 .list();
+    }
+
+    @Transactional(readOnly = true)
+    public Long getMaxViews() {
+        return (Long) getSession().createCriteria(CourseView.class)
+                .setProjection(Projections.max("views"))
+                .uniqueResult();
     }
 }

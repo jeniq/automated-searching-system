@@ -1,5 +1,7 @@
 package com.hryshchenko.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +16,7 @@ public class CourseView {
     private Long id;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id")
+    @JsonManagedReference
     private Course course;
     @Column(name = "view")
     private Long views;

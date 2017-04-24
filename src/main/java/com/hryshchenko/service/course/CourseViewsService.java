@@ -24,4 +24,8 @@ public class CourseViewsService {
                 new CourseViewsDTO(view.getCourse().getId(), view.getCourse().getName(), view.getViews())));
         return courses;
     }
+
+    public Long getMaxViews(){
+        return courseViewsRepository.getMaxViews();
+    }
 }

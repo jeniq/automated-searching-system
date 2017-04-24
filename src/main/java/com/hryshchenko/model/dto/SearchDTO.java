@@ -23,6 +23,8 @@ public class SearchDTO {
     private List<Long> categories = new ArrayList<>();
     @JsonView(View.Public.class)
     private Integer pageSize;
+    @JsonProperty("locale")
+    private String locale;
 
     public SearchDTO() {
     }
@@ -80,4 +82,11 @@ public class SearchDTO {
         return language;
     }
 
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
 }

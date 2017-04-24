@@ -38,6 +38,7 @@ public class Course {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "language_id")
     private Language language;
+    @JsonBackReference
     @OneToOne(mappedBy = "course")
     private CourseView courseView;
     private transient double weight;
@@ -142,4 +143,11 @@ public class Course {
         this.weight = weight;
     }
 
+    public CourseView getCourseView() {
+        return courseView;
+    }
+
+    public void setCourseView(CourseView courseView) {
+        this.courseView = courseView;
+    }
 }

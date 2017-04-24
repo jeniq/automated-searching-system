@@ -8,5 +8,13 @@
             <li><a href="#">Категорії</a></li>
             <li><a href="/report">Статистика</a></li>
         </ul>
+        <span id="languageBar">
+            <label ng-model="request.locale" uib-btn-radio="'uk'"
+                   ng-class="{selected: request.locale == 'uk'}">UA</label> |
+            <label ng-model="request.locale" uib-btn-radio="'ru'"
+                   ng-class="{selected: request.locale == 'ru'}">RU</label> |
+            <label ng-model="request.locale" uib-btn-radio="'en'"
+                   ng-class="{selected: request.locale == 'en'}">EN</label>
+        </span>
     </div>
 </nav>

@@ -23,15 +23,18 @@ public class CourseService {
     private SourceRepository sourceRepository;
     private CourseViewsRepository courseViewsRepository;
     private SearchService searchService;
+    private Weight weight;
 
     @Autowired
     public CourseService(CourseRepository courseRepository,
                          SearchService searchService, SourceRepository sourceRepository,
-                         CourseViewsRepository courseViewsRepository) {
+                         CourseViewsRepository courseViewsRepository,
+                         Weight weight) {
         this.courseRepository = courseRepository;
         this.searchService = searchService;
         this.sourceRepository = sourceRepository;
         this.courseViewsRepository = courseViewsRepository;
+        this.weight = weight;
     }
 
     public Course getCourse(Long id) {
@@ -79,8 +82,7 @@ public class CourseService {
             result = courseRepository.getCourses(searchDTO, pageSize);
         }
 
-
-        return new Weight().define(result, searchDTO).subList(0, confirmResultSize(pageSize, result)); // Define and sort weight for each course in result set
+        return weight.define(result, searchDTO).subList(0, confirmResultSize(pageSize, result)); // Define and sort weight for each course in result set
     }
 
     public void appendView(Long courseId) {

@@ -12,7 +12,8 @@
                     string: "",
                     source: [],
                     category: [],
-                    language: []
+                    language: [],
+                    locale: "uk"
                 };
                 $scope.courseList = [];
                 $scope.promise = [];

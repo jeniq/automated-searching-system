@@ -17,7 +17,7 @@ import java.util.List;
 public class Weight {
 
     private CourseViewsService courseViewsService;
-    private long maxViews;
+    private Long maxViews;
 
     @Autowired
     public Weight(CourseViewsService courseViewsService) {
@@ -42,7 +42,7 @@ public class Weight {
         }
         double relevanceValue = relevance(course, searchDTO);
         double popularityValue = 0;
-        if (maxViews > 0){
+        if (maxViews != null && maxViews > 0){
             popularityValue = popularity(course, maxViews);
         }
         return (sourceValue + languageValue + relevanceValue + popularityValue) / size;

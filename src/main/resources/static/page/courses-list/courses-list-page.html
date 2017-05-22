@@ -50,14 +50,30 @@
                                ng-true-value="2"
                                ng-false-value="null">Англійська
                     </li>
+                    <li ng-show="languageMoreBtnShow">
+                        <button class="btn btn-info moreBtn" ng-click="languageMoreBtnShow = !languageMoreBtnShow">Більше</button>
+                    </li>
+                    <div ng-show="!languageMoreBtnShow">
                     <li><input type="checkbox" ng-click="checkLanguageSelected(3)" ng-model="request.language[3]"
                                ng-true-value="3"
                                ng-false-value="null">Російська
+                    </li>
+                    <li><input type="checkbox" ng-click="checkLanguageSelected(5)" ng-model="request.language[5]"
+                               ng-true-value="5"
+                               ng-false-value="null">Французська
+                    </li>
+                    <li><input type="checkbox" ng-click="checkLanguageSelected(6)" ng-model="request.language[6]"
+                               ng-true-value="6"
+                               ng-false-value="null">Китайська
                     </li>
                     <li><input type="checkbox" ng-click="checkLanguageSelected(4)" ng-model="request.language[4]"
                                ng-true-value="4"
                                ng-false-value="null">Інші
                     </li>
+                        <li >
+                            <button class="btn btn-info moreBtn" ng-click="languageMoreBtnShow = !languageMoreBtnShow">Згорнути</button>
+                        </li>
+                    </div>
                 </ul>
             </div>
             <div class="col-sm-9 mainContent">

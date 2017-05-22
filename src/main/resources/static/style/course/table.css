@@ -49,3 +49,10 @@
 div .courseSource {
     float:right;
 }
+
+.moreBtn{
+    font-size: 10pt !important;
+    height: 30px !important;
+    margin-top: 5px;
+    margin-left: 15px;
+}

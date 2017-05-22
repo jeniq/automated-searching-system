@@ -19,6 +19,7 @@
                 $scope.promise = [];
                 $scope.boxesSelected = {source: false, language: false};
                 $scope.notFoundMessage = false;
+                $scope.languageMoreBtnShow = true;
 
                 /**
                  * This method check that check-buttons are selected
